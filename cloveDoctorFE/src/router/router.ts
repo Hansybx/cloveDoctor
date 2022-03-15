@@ -7,7 +7,28 @@ const routes = [
         path: '/home',
         name: 'home',
         component: () => import("../pages/home/Home.vue"),
-    }
+        children: [
+            {
+                path: '',
+                component: () => import("../pages/home/HomeMain.vue"),
+            },
+            {
+                path: '/message',
+                component: () => import("../pages/message/MessagePage.vue"),
+            }
+        ]
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: () => import("../pages/login/Login.vue"),
+    },
+    {
+        path: '/register',
+        name: 'register',
+        component: () => import("../pages/register/Register.vue"),
+    },
+   
 ]
 
 const router = createRouter({

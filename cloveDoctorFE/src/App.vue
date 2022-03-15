@@ -3,7 +3,6 @@
 </template>
 
 <script setup lang="ts">
-
 </script>
 
 <style>
@@ -14,4 +13,5 @@
   text-align: center;
   color: #2c3e50;
 }
+
 </style>
