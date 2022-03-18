@@ -13,6 +13,10 @@ const routes = [
                 component: () => import("../pages/home/HomeMain.vue"),
             },
             {
+                path: '/cart',
+                component: () => import("../pages/cart/cart.vue"),
+            },
+            {
                 path: '/message',
                 component: () => import("../pages/message/MessagePage.vue"),
             }

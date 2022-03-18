@@ -24,7 +24,7 @@
                 </el-icon>
                 <span class="text-container">购物车</span>
             </div>-->
-            <el-button class="text-container" type="text" :icon="ShoppingCart">购物车</el-button>
+            <el-button @click="toCart" class="text-container" type="text" :icon="ShoppingCart">购物车</el-button>
         </el-col>
         <el-col class="logo-container" :span="4">
             <!-- <div class="logo-container">
@@ -48,6 +48,10 @@ function toHome(): void {
 
 function toMsg(): void {
     router.push('/message');
+}
+
+function toCart(): void {
+    router.push('/cart')
 }
 
 function toLogin(): void {
