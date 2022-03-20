@@ -28,11 +28,28 @@ const routes = [
         component: () => import("../pages/login/Login.vue"),
     },
     {
-        path: '/register',
-        name: 'register',
-        component: () => import("../pages/register/Register.vue"),
-    },
-   
+        path: '/admin',
+        name: 'admin',
+        component: () => import("../pages/admin/admin.vue"),
+        children: [
+            {
+                path: '',
+                component: () => import("../pages/admin/test.vue"),
+            },
+            {
+                path: '/admin/drugs',
+                component: () => import("../pages/admin/drugs/drugs.vue"),
+            },
+            {
+                path: '/admin/user',
+                component: () => import("../pages/admin/user/user.vue"),
+            },
+            {
+                path: '/admin/orders',
+                component: () => import("../pages/admin/order/order.vue"),
+            },
+        ]
+    }
 ]
 
 const router = createRouter({
