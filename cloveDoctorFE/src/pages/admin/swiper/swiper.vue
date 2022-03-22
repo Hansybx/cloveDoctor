@@ -2,19 +2,16 @@
     <el-card class="table-container">
         <template #header>
             <div class="search-container">
-                <el-input v-model="keywords" class="searchInput" placeholder="Type something" />
-                <el-button type="primary" :icon="Search">搜索</el-button>
-                <el-button type="primary" :icon="CirclePlus">新增药品</el-button>
+                <el-button type="primary" :icon="CirclePlus">新增图片</el-button>
+                <el-button type="primary" :icon="Delete">批量删除</el-button>
             </div>
         </template>
         <el-table class="drugTable" :data="tableData" max-height="600px">
-            <el-table-column prop="date" label="药品名称" width="220" />
-            <el-table-column prop="sid" label="药品编号" width="200" />
-            <el-table-column prop="name" label="药品图片" width="300" />
-            <el-table-column prop="state" label="药品库存" width="200" />
-            <el-table-column prop="discount" label="药品折扣" width="150" />
-            <el-table-column prop="city" label="药品当前售价" width="200" />
-            <el-table-column prop="address" label="药品状态" width="150" />
+            <el-table-column type="selection" width="55" />
+            <el-table-column prop="date" label="图片预览" width="220" />
+            <el-table-column prop="sid" label="跳转链接" width="550" />
+            <el-table-column prop="name" label="排序值" width="200" />
+            <el-table-column prop="state" label="添加时间" width="400" />
             <el-table-column label="操作" width="200">
                 <template #default="scope">
                     <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -38,7 +35,7 @@
 
 <script setup lang='ts'>
 import { ref } from 'vue'
-import { Search, CirclePlus } from '@element-plus/icons-vue'
+import { Delete, CirclePlus } from '@element-plus/icons-vue'
 const keywords = ref('')
 
 const tableData = [

@@ -17,7 +17,7 @@
             <el-icon>
                 <icon-menu />
             </el-icon>
-            <span>药品配置</span>
+            <span>药品管理</span>
         </el-menu-item>
         <el-menu-item index="/admin/user">
             <el-icon>

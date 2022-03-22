@@ -48,6 +48,18 @@ const routes = [
                 path: '/admin/orders',
                 component: () => import("../pages/admin/order/order.vue"),
             },
+            {
+                path: '/admin/main/swiper',
+                component: () => import("../pages/admin/swiper/swiper.vue"),
+            },
+            {
+                path: '/admin/main/recommend',
+                component: () => import("../pages/admin/recommend/recommend.vue"),
+            },
+            {
+                path: '/admin/main/discount',
+                component: () => import("../pages/admin/discount/discount.vue"),
+            },
         ]
     }
 ]
