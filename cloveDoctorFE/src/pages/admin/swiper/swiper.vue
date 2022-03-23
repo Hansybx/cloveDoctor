@@ -59,6 +59,7 @@
 <script setup lang='ts'>
 import { reactive, ref } from 'vue'
 import { Delete, CirclePlus } from '@element-plus/icons-vue'
+import CommonUtils from '../../../common/commonUtils'
 const keywords = ref('')
 
 const tableData = [
@@ -94,6 +95,7 @@ const formLabelWidth = '140px';
 // 新增轮播图dialog 是否可见
 function swiperVisible() {
     swiperDialogVisible.value = !swiperDialogVisible.value
+    CommonUtils.dateFormat(new Date());
 }
 
 function addSwiper() {
