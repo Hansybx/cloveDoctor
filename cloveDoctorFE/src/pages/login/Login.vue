@@ -84,8 +84,9 @@ const loginForm = reactive({
     checkCode: "",
 })
 const ruleFormRef = ref<FormInstance>();
-let validateRepeatPwd = (rule, value, callback) => {
+let validateRepeatPwd = (rule: any, value: string, callback: any) => {
     if (value !== loginForm.password) callback(new Error("密码不相同！"));
+    callback();
 }
 const loginRules = reactive({
     name: [
