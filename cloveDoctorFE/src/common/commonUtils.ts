@@ -8,7 +8,7 @@ export default class CommonUtils {
         let hours: string = time.getHours() < 10 ? '0' + time.getHours().toString() : time.getHours().toString();
         let minutes: string = time.getMinutes() < 10 ? '0' + time.getMinutes().toString() : time.getMinutes().toString();
         let seconds: string = time.getSeconds() < 10 ? '0' + time.getSeconds().toString() : time.getSeconds().toString();
-        date = year + '-' + mon + '-' + day + '-' + hours + ':' + minutes + ':' + seconds;
+        date = year + '-' + mon + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
         return date;
     }
 }
