@@ -1,7 +1,7 @@
 package com.hansybx.clovedoctorbe.common;
 
 public class CommonResponse {
-    private static final String DEFAULT_SUCCESS_MESSAGE = "SUCCESS";
+    private static final String DEFAULT_SUCCESS_MESSAGE = "请求成功";
 
     // 只返回状态
     public static CommonResult Success() {
