@@ -15,6 +15,7 @@ import java.util.List;
 
 @Service
 public class SwiperService {
+    // 轮播图管理
     @Resource
     SwiperMapper swiperMapper;
 
@@ -30,7 +31,7 @@ public class SwiperService {
         swiper.setImgUrl(swiperDTO.getImgUrl());
         swiper.setSortId(swiperDTO.getSortId());
         int num = swiperMapper.insert(swiper);
-        if(num>0){
+        if (num > 0) {
             return CommonResponse.Success();
         }
         return CommonResponse.Fail("轮播图配置失败");

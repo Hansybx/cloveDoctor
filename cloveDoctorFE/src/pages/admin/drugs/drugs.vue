@@ -2,8 +2,21 @@
     <el-card class="table-container">
         <template #header>
             <div class="search-container">
-                <el-input v-model="keywords" class="searchInput" placeholder="Type something" />
-                <el-button type="primary" :icon="Search">搜索</el-button>
+                <el-input v-model="state.keywords" class="searchInput" placeholder="输入名称或编号中的关键字" />
+                <el-select v-model="state.selectOpt" class="m-2" placeholder="药品状态">
+                    <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    />
+                </el-select>
+                <el-button
+                    type="primary"
+                    :icon="Search"
+                    @click="drugSearch()"
+                    @keyup.enter="drugSearch()"
+                >搜索</el-button>
                 <el-button type="primary" :icon="CirclePlus" @click="addDrugs()">新增药品</el-button>
                 <el-button type="primary" :icon="CirclePlus" @click="handleDeleteMulti()">批量删除</el-button>
             </div>
@@ -33,7 +46,7 @@
             </el-table-column>
             <el-table-column label="操作" width="250">
                 <template #default="scope">
-                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    <el-button size="small" @click="editDrugs(scope.row)">编辑</el-button>
                     <el-button
                         v-if="scope.row.status === 1"
                         size="small"
@@ -81,7 +94,16 @@ onMounted(() => {
     getDrugList();
 })
 
-const keywords = ref('')
+const options = [
+    {
+        value: 1,
+        label: '在售',
+    },
+    {
+        value: 0,
+        label: '下架',
+    },
+]
 
 const state = reactive({
     tableData: [],
@@ -91,7 +113,31 @@ const state = reactive({
     delType: 'single', // 删除类型 single multi
     delParams: [],
     editType: 'add', // 编辑类型 add edit
+    selectOpt: 1, //搜索相关 状态
+    keywords: '', //搜索相关 关键字
+    selected: false, //搜索相关 是否使用过搜索
 })
+
+const drugSearch = () => {
+    let searchPage = 1;
+    if (state.selected) searchPage = state.currentPage;
+
+    axios.get(Constant.BASE_URL_ADMIN + '/drugs/search', {
+        params: {
+            keyword: state.keywords,
+            status: state.selectOpt,
+            pageNum: searchPage,
+            pageSize: state.pageSize
+        }
+    }).then(res => {
+        if (res.data.code === 200) {
+            console.log(res.data);
+            state.tableData = res.data.data.drugList;
+            state.totalNum = res.data.data.totalNum;
+            state.selected = true;
+        }
+    })
+}
 
 const dlgControl = ref();
 const delDlgControl = ref();
@@ -101,7 +147,11 @@ const handleSelectionChange = (val: any) => {
 }
 
 const addDrugs = () => {
-    dlgControl.value.dlgOpen();
+    dlgControl.value.dlgOpen(false);
+}
+
+const editDrugs = (row: drugs) => {
+    dlgControl.value.dlgOpen(true, row);
 }
 
 const getDrugList = () => {

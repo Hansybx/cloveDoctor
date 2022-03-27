@@ -85,10 +85,21 @@ const dlgRules = reactive({
         { required: true, message: '请选择药品保质期', trigger: 'blur' },
     ],
 })
-
-const dlgOpen = () => {
+const isEdit = ref(false);
+const dlgOpen = (isEditflag: boolean, params: drugs) => {
     state.dlgVisible = true;
+    isEdit.value = isEditflag;
+    if (params) {
+        drugInfo.drugImg = params.drugImg;
+        drugInfo.drugName = params.drugName;
+        drugInfo.id = params.id;
+        drugInfo.price = params.price;
+        drugInfo.status = params.status;
+        drugInfo.stock = params.stock;
+        drugInfo.updateTime = params.updateTime;
+    }
 }
+
 
 const dlgInfoResert = (formEl: FormInstance | undefined) => {
     if (!formEl) return;
@@ -107,9 +118,15 @@ const dlgClose = (formEl: FormInstance | undefined) => {
 
 const formSubmit = async (formEl: FormInstance | undefined) => {
     if (!formEl) return;
+    let urlSuffix: string = "";
+    if (isEdit.value) {
+        urlSuffix = '/update'
+    }
+
+
     await formEl.validate((valid: any, fields: any) => {
         if (valid) {
-            axios.post(Constant.BASE_URL_ADMIN + '/drugs', drugInfo).then(res => {
+            axios.post(Constant.BASE_URL_ADMIN + '/drugs' + urlSuffix, drugInfo).then(res => {
                 if (res.data.code === 200) {
                     ElMessage({
                         message: res.data.message,
@@ -119,11 +136,11 @@ const formSubmit = async (formEl: FormInstance | undefined) => {
                 } else if (res.data.code === 400) {
                     ElMessage.error(res.data.message)
                 } else {
-                    ElMessage.error('糟糕，添加失败了！')
+                    ElMessage.error('糟糕，请求失败了！')
                 }
             })
         } else {
-            ElMessage.error('糟糕，添加失败了！')
+            ElMessage.error('糟糕，请求失败了！')
         }
     });
     dlgClose(formEl);

@@ -12,6 +12,9 @@ import javax.annotation.Resource;
 @CrossOrigin
 @RequestMapping("/api/v1/admin")
 public class DrugsController {
+
+    // 药品管理
+
     @Resource
     DrugsService drugsService;
 
@@ -30,13 +33,23 @@ public class DrugsController {
         return drugsService.changeStatus(drugsDTO);
     }
 
+    @PostMapping("/drugs/update")
+    public CommonResult drugsUpdate(@RequestBody Drugs drugsDTO) {
+        return drugsService.drugUpdate(drugsDTO);
+    }
+
     @PostMapping("/drugs/del/single")
-    public CommonResult drugDelSingle(@RequestBody DrugsDTO drugsDTO){
+    public CommonResult drugDelSingle(@RequestBody DrugsDTO drugsDTO) {
         return drugsService.drugDelSingle(drugsDTO);
     }
 
     @PostMapping("/drugs/del/multi")
-    public CommonResult drugDelSingle(@RequestBody DrugsDTO[] drugsDTOs){
+    public CommonResult drugDelSingle(@RequestBody DrugsDTO[] drugsDTOs) {
         return drugsService.drugDelSingle(drugsDTOs);
+    }
+
+    @GetMapping("/drugs/search")
+    public CommonResult drugSearch(@RequestParam String keyword, @RequestParam Integer status, @RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+        return drugsService.drugSearch(keyword, status, pageNum, pageSize);
     }
 }

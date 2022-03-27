@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.hansybx.clovedoctorbe.DTO.DrugsDTO;
 import com.hansybx.clovedoctorbe.common.CommonResponse;
 import com.hansybx.clovedoctorbe.common.CommonResult;
+import com.hansybx.clovedoctorbe.mapper.DrugsExtMapper;
 import com.hansybx.clovedoctorbe.mapper.DrugsMapper;
 import com.hansybx.clovedoctorbe.model.Drugs;
 import com.hansybx.clovedoctorbe.model.DrugsExample;
@@ -17,6 +18,9 @@ import java.util.List;
 public class DrugsService {
     @Resource
     DrugsMapper drugsMapper;
+
+    @Resource
+    DrugsExtMapper drugsExtMapper;
 
 //    public CommonResult (DrugsDTO drugsDTO){
 //        return CommonResponse.Success();
@@ -85,5 +89,27 @@ public class DrugsService {
             }
         }
         return CommonResponse.Success("药品删除成功");
+    }
+
+    public CommonResult drugUpdate(Drugs drugsDTO) {
+        DrugsExample drugsExample = new DrugsExample();
+        drugsExample.createCriteria().andIdEqualTo(drugsDTO.getId());
+        int res = drugsMapper.updateByExample(drugsDTO, drugsExample);
+        if (res > 0) {
+            return CommonResponse.Success();
+        }
+        return CommonResponse.Fail("更新失败");
+    }
+
+    public CommonResult drugSearch(String keyword, Integer status, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+
+        List<Drugs> drugsList = drugsExtMapper.search(keyword, status);
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("totalNum", drugsList.size());
+        map.put("drugList", drugsList);
+        return CommonResponse.Success(map);
+
     }
 }
