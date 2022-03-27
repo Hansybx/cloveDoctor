@@ -8,6 +8,7 @@
             </div>
         </template>
         <el-table class="drugTable" :data="tableData" max-height="600px">
+            <el-table-column type="selection" width="55" />
             <el-table-column prop="date" label="用户名称" width="220" />
             <el-table-column prop="sid" label="用户账号" width="200" />
             <el-table-column prop="name" label="身份权限" width="300" />

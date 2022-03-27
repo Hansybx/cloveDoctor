@@ -281,7 +281,6 @@ const handleDelete = (index: number, row: swiper) => {
 const delSwiper = () => {
     console.log(delMulti.value,'flag');
     if (delMulti.value) {
-        debugger;
         multiDelSwiper();
         changeDelDlgVisibleMulti();
     } else {

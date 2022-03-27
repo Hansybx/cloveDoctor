@@ -16,6 +16,7 @@
             </div>
         </template>
         <el-table class="drugTable" :data="tableData" max-height="600px">
+            <el-table-column type="selection" width="55" />
             <el-table-column prop="date" label="订单编号" width="220" />
             <el-table-column prop="sid" label="订单总价" width="200" />
             <el-table-column prop="name" label="订单状态" width="300" />
@@ -69,26 +70,26 @@ const tableData = [
 const value = ref('')
 
 const options = [
-  {
-    value: 'Option1',
-    label: 'Option1',
-  },
-  {
-    value: 'Option2',
-    label: 'Option2',
-  },
-  {
-    value: 'Option3',
-    label: 'Option3',
-  },
-  {
-    value: 'Option4',
-    label: 'Option4',
-  },
-  {
-    value: 'Option5',
-    label: 'Option5',
-  },
+    {
+        value: 'Option1',
+        label: 'Option1',
+    },
+    {
+        value: 'Option2',
+        label: 'Option2',
+    },
+    {
+        value: 'Option3',
+        label: 'Option3',
+    },
+    {
+        value: 'Option4',
+        label: 'Option4',
+    },
+    {
+        value: 'Option5',
+        label: 'Option5',
+    },
 ]
 
 const handleEdit = (index: number, row: any) => {
