@@ -84,5 +84,8 @@
             <!--是否使用实际列名,默认为false-->
             <property name="useActualColumnNames" value="true" />
         </table>
+        <table tableName="drugs" domainObjectName="Drugs">
+            <property name="useActualColumnNames" value="true" />
+        </table>
     </context>
 </generatorConfiguration>

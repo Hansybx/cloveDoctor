@@ -3,7 +3,6 @@ package com.hansybx.clovedoctorbe.mapper;
 import com.hansybx.clovedoctorbe.model.Swiper;
 import com.hansybx.clovedoctorbe.model.SwiperExample;
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 public interface SwiperMapper {

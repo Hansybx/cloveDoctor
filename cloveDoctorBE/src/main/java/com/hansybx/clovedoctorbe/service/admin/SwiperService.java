@@ -29,8 +29,11 @@ public class SwiperService {
         swiper.setDrugId(swiperDTO.getDrugId());
         swiper.setImgUrl(swiperDTO.getImgUrl());
         swiper.setSortId(swiperDTO.getSortId());
-        swiperMapper.insert(swiper);
-        return CommonResponse.Success();
+        int num = swiperMapper.insert(swiper);
+        if(num>0){
+            return CommonResponse.Success();
+        }
+        return CommonResponse.Fail("轮播图配置失败");
     }
 
     public CommonResult getSwiperListPage(Integer pageNum, Integer pageSize) {
