@@ -1,6 +1,6 @@
 <template>
     <div>
-        <img class="background" :style="screenState" src="../../assets/background.jpg" />
+        <img class="background" src="../../assets/background.jpg" />
         <el-card class="centerCard">
             <div v-if="isLogin">
                 <el-form
@@ -11,19 +11,27 @@
                     :model="loginForm"
                     style="max-width: 460px"
                 >
-                    <el-form-item label="用户名" prop="name">
-                        <el-input v-model="loginForm.name" />
+                    <el-form-item label="用户名" prop="username">
+                        <el-input v-model="loginForm.username" />
                     </el-form-item>
                     <el-form-item label="密码" prop="password">
                         <el-input v-model="loginForm.password" type="password" show-password />
                     </el-form-item>
-                    <el-form-item label="验证码" prop="checkCode">
-                        <el-input v-model="loginForm.checkCode" />
+                    <el-form-item label="验证码" prop="captcha">
+                        <div class="captcha-container">
+                            <el-input v-model="loginForm.captcha" />
+                            <el-image
+                                :src="imgUrl"
+                                @click="capthcaRefresh()"
+                                class="captcha-img"
+                                fit="contain"
+                            />
+                        </div>
                     </el-form-item>
                 </el-form>
                 <el-row class="btnGroup">
-                    <el-button type="primary">注册</el-button>
-                    <el-button type="success">登录</el-button>
+                    <el-button type="primary" @click="toRegister()">注册</el-button>
+                    <el-button type="success" @click="login()">登录</el-button>
                 </el-row>
             </div>
             <div v-else>
@@ -35,8 +43,8 @@
                     :model="loginForm"
                     style="max-width: 460px"
                 >
-                    <el-form-item label="用户名" prop="name">
-                        <el-input v-model="loginForm.name" />
+                    <el-form-item label="用户名" prop="username">
+                        <el-input v-model="loginForm.username" />
                     </el-form-item>
                     <el-form-item label="密码" prop="password">
                         <el-input v-model="loginForm.password" type="password" show-password />
@@ -44,12 +52,21 @@
                     <el-form-item label="重复密码" prop="passwordRepeat">
                         <el-input v-model="loginForm.passwordRepeat" type="password" show-password />
                     </el-form-item>
-                    <el-form-item label="验证码" prop="checkCode">
-                        <el-input v-model="loginForm.checkCode" />
+                    <el-form-item label="验证码" prop="captcha">
+                        <div class="captcha-container">
+                            <el-input v-model="loginForm.captcha" />
+                            <el-image
+                                :src="imgUrl"
+                                @click="capthcaRefresh()"
+                                class="captcha-img"
+                                fit="contain"
+                            />
+                        </div>
                     </el-form-item>
                 </el-form>
                 <el-row class="btnGroup">
-                    <el-button type="primary">注册</el-button>
+                    <el-button type="primary" @click="register()">注册</el-button>
+                    <el-button type="success" @click="toLogin()">返回登录</el-button>
                 </el-row>
             </div>
         </el-card>
@@ -57,31 +74,42 @@
 </template>
 
 <script setup lang='ts'>
-import { reactive, onMounted, ref } from 'vue';
+import { reactive, onMounted, ref, onBeforeMount, inject } from 'vue';
+import { v4 as uuidv4 } from 'uuid';
+import { ElMessage } from 'element-plus';
 import type { FormInstance } from 'element-plus'
+import axios from 'axios'
+import Constant from '../../common/config';
+import router from '../../router/router';
+import getGlobalProperties from '../../hooks/useGlobal';
+
 // mounted
 onMounted(() => {
     console.log('Component is mounted!')
-    getCardWidth();
 })
+const globalProps = getGlobalProperties();
 
-const isLogin = ref(true);
-
-const screenState = reactive({
-    width: "",
-    height: "",
-})
-
-function getCardWidth() {
-    screenState.height = window.screen.availHeight + "px";
-    screenState.width = document.body.clientWidth + "px";
+const UUID = uuidv4();
+const imgUrl = ref(Constant.BASE_URL_USER + '/captcha');
+const capthcaRefresh = () => {
+    imgUrl.value += "?time=" + new Date().getTime();
 }
 
+const isLogin = ref(true);
+const toRegister = () => {
+    isLogin.value = false;
+}
+
+const toLogin = () => {
+    isLogin.value = true;
+}
+
+
 const loginForm = reactive({
-    name: "",
+    username: "",
     password: "",
     passwordRepeat: "",
-    checkCode: "",
+    captcha: "",
 })
 const ruleFormRef = ref<FormInstance>();
 let validateRepeatPwd = (rule: any, value: string, callback: any) => {
@@ -89,7 +117,7 @@ let validateRepeatPwd = (rule: any, value: string, callback: any) => {
     callback();
 }
 const loginRules = reactive({
-    name: [
+    username: [
         { required: true, message: '请输入用户名', trigger: 'blur' },
     ],
     password: [
@@ -100,10 +128,36 @@ const loginRules = reactive({
         { required: true, message: '请输入密码', trigger: 'blur' },
         { validator: validateRepeatPwd, trigger: 'blur' },
     ],
-    checkCode: [
+    captcha: [
         { required: true, message: '请输入验证码', trigger: 'blur' },
     ],
 })
+
+const register = () => {
+    loginFormPost('/register');
+}
+
+const login = () => {
+    loginFormPost('/login');
+}
+
+const loginFormPost = (uri: string) => {
+    console.log(loginForm)
+    axios.post(Constant.BASE_URL_USER + uri, loginForm).then(res => {
+        if (res.data.code === 200) {
+            ElMessage({
+                message: res.data.message,
+                type: 'success'
+            });
+            globalProps.$isOnline = true;
+            router.replace({ path: "/home" });
+        } else if (res.data.code === 400) {
+            ElMessage.error(res.data.message)
+        } else {
+            ElMessage.error('糟糕，刚刚失败了！')
+        }
+    })
+}
 
 </script>
 
@@ -112,6 +166,16 @@ const loginRules = reactive({
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
+    width: 100vw;
+    height: 99vh;
+}
+
+.captcha-container {
+    display: flex;
+}
+
+.captcha-img {
+    width: 90px;
 }
 
 .centerCard {

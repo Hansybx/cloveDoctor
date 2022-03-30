@@ -34,7 +34,7 @@ const routes = [
         children: [
             {
                 path: '',
-                component: () => import("../pages/admin/test.vue"),
+                component: () => import("../pages/admin/swiper/swiper.vue"),
             },
             {
                 path: '/admin/drugs',

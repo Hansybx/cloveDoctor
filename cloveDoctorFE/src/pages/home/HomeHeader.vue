@@ -33,14 +33,15 @@
                 </el-icon>
                 <span class="text-container">登录</span>
             </div>-->
-            <el-button @click="toLogin" class="text-container" type="text" :icon="User">登录</el-button>
+            <el-button @click="toLogin()" class="text-container" type="text" :icon="User">登录</el-button>
         </el-col>
     </el-row>
 </template>
 
 <script setup lang='ts'>
 import { Message, ShoppingCart, User } from '@element-plus/icons-vue'
-import router from '../../router/router';
+import { useRouter } from 'vue-router';
+const router = useRouter()
 
 function toHome(): void {
     router.push('/home');
