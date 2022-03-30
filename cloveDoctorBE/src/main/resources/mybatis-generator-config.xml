@@ -5,6 +5,7 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
+
     <!-- 引入配置文件 -->
     <properties resource="application.properties"/>
 
@@ -16,7 +17,7 @@
 
         <!-- 这个插件给生成的Java模型对象增加了equals和hashCode方法 -->
         <!--<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>-->
-
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"></plugin>
         <!-- 注释 -->
         <commentGenerator>
             <!-- 是否不生成注释 -->
@@ -85,6 +86,9 @@
             <property name="useActualColumnNames" value="true" />
         </table>
         <table tableName="drugs" domainObjectName="Drugs">
+            <property name="useActualColumnNames" value="true" />
+        </table>
+        <table tableName="user" domainObjectName="User">
             <property name="useActualColumnNames" value="true" />
         </table>
     </context>
