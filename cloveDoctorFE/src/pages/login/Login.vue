@@ -87,7 +87,6 @@ import getGlobalProperties from '../../hooks/useGlobal';
 onMounted(() => {
     console.log('Component is mounted!')
 })
-const globalProps = getGlobalProperties();
 
 const UUID = uuidv4();
 const imgUrl = ref(Constant.BASE_URL_USER + '/captcha');
@@ -149,7 +148,6 @@ const loginFormPost = (uri: string) => {
                 message: res.data.message,
                 type: 'success'
             });
-            globalProps.$isOnline = true;
             router.replace({ path: "/home" });
         } else if (res.data.code === 400) {
             ElMessage.error(res.data.message)

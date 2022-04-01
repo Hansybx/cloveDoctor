@@ -19,6 +19,10 @@ const routes = [
             {
                 path: '/message',
                 component: () => import("../pages/message/MessagePage.vue"),
+            },
+            {
+                path:'/drug/:id',
+                component: () => import("../pages/drug/drug.vue"),
             }
         ]
     },
@@ -55,10 +59,6 @@ const routes = [
             {
                 path: '/admin/main/recommend',
                 component: () => import("../pages/admin/recommend/recommend.vue"),
-            },
-            {
-                path: '/admin/main/discount',
-                component: () => import("../pages/admin/discount/discount.vue"),
             },
         ]
     }

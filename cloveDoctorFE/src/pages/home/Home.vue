@@ -18,7 +18,7 @@ import HomeHeader from './HomeHeader.vue';
 
 <style>
 .home-container {
-    padding: 0 200px;
+    padding: 0 10vw;
 }
 
 .header-container {

@@ -9,7 +9,6 @@
             </template>
             <el-menu-item-group>
                 <el-menu-item index="/admin/main/swiper">轮播图配置</el-menu-item>
-                <el-menu-item index="/admin/main/discount">折扣药品配置</el-menu-item>
                 <el-menu-item index="/admin/main/recommend">推荐药品配置</el-menu-item>
             </el-menu-item-group>
         </el-sub-menu>
