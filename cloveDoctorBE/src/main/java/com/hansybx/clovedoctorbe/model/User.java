@@ -1,7 +1,7 @@
 package com.hansybx.clovedoctorbe.model;
 
 public class User {
-    private Integer uid;
+    private Integer id;
 
     private String username;
 
@@ -9,12 +9,12 @@ public class User {
 
     private String type;
 
-    public Integer getUid() {
-        return uid;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUid(Integer uid) {
-        this.uid = uid;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getUsername() {

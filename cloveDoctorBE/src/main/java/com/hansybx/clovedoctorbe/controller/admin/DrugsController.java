@@ -52,4 +52,9 @@ public class DrugsController {
     public CommonResult drugSearch(@RequestParam String keyword, @RequestParam Integer status, @RequestParam Integer pageNum, @RequestParam Integer pageSize) {
         return drugsService.drugSearch(keyword, status, pageNum, pageSize);
     }
+
+    @GetMapping("/drugs/search/recommend")
+    public CommonResult drugSearch(@RequestParam String keyword) {
+        return drugsService.drugSearch(keyword);
+    }
 }

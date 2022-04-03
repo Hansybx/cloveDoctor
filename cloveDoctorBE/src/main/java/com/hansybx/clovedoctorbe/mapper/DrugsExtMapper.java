@@ -11,4 +11,10 @@ public interface DrugsExtMapper {
             "LIKE CONCAT('%',#{keyword},'%') " +
             "AND status = #{status}")
     List<Drugs> search(@Param("keyword") String keyword, @Param("status") int status);
+
+    @Select("SELECT drugs.*  FROM drugs \n" +
+            "WHERE\n" +
+            "\tconcat( drugs.drugName, drugs.id ) LIKE CONCAT('%',#{keyword},'%') AND status = 1\n" +
+            "\tAND drugs.id NOT IN ( SELECT recommenddrugs.drugId FROM recommenddrugs )")
+    List<Drugs> searchUnuse(@Param("keyword") String keyword);
 }

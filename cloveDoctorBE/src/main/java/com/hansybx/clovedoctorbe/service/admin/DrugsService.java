@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class DrugsService {
@@ -110,6 +112,10 @@ public class DrugsService {
         map.put("totalNum", drugsList.size());
         map.put("drugList", drugsList);
         return CommonResponse.Success(map);
+    }
 
+    public CommonResult drugSearch(String keyword) {
+        List<Drugs> drugsList = drugsExtMapper.searchUnuse(keyword);
+        return CommonResponse.Success(drugsList);
     }
 }
