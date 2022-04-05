@@ -7,4 +7,5 @@ import lombok.Data;
 public class RecommendDrugsDTO extends RecommendDrugs {
     private String drugImg;
     private String drugName;
+    private Float price;
 }

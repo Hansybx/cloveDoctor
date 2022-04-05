@@ -1,26 +1,24 @@
 <template>
-    <el-container v-for="item in 3" :key="item" class="shelf-container">
+    <el-container class="shelf-container">
         <el-aside>
-            <el-card shadow="hover" class="drugKind">
-                <img
-                    src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-                    class="image"
-                />
+            <el-card shadow="hover" class="drugKind" :style="handleKindHeight()">
+                <div class="card-header">
+                    <span>药品推荐</span>
+                </div>
+                <el-image :src="drugKindImg" fit="contain" :style="handleKindImg()" />
             </el-card>
         </el-aside>
         <el-main>
             <el-space :size="0" wrap>
                 <el-card
-                    v-for="item in 8"
-                    :key="item"
+                    v-for="item in local.recommendList"
                     shadow="hover"
                     class="drugItem"
-                    :style="cardState"
+                    @click="toDrugItem(item.id)"
                 >
-                    <img
-                        src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-                        class="image"
-                    />
+                    <el-image :src="item.drugImg" class="imageItem" />
+                    <div>{{ item.drugName }}</div>
+                    <div>￥{{ item.price }}</div>
                 </el-card>
             </el-space>
         </el-main>
@@ -28,25 +26,45 @@
 </template>
 
 <script setup lang='ts'>
-import { reactive, onMounted } from 'vue';
+import axios from 'axios';
+import { reactive, onMounted, ref, onBeforeMount, Ref } from 'vue';
+import Constant from '../../common/config';
+import router from '../../router/router';
 
-const cardState = reactive({
-    // height: "",
-    width: ""
+onBeforeMount(() => {
+    getRecommend();
 })
 
 // mounted
 onMounted(() => {
-    console.log('Component is mounted!')
-    getCardWidth();
+    handleKindHeight();
 })
 
-function getCardWidth() {
-    // cardState.height = window.innerHeight + "px";
-    cardState.width = (window.innerWidth - 700) / 4.2 + "px";
-    // cardState.height = 10 + "px";
-    // cardState.width = 10 + "px";
-    console.log(111);
+const local = reactive({ recommendList: [] })
+const handleKindHeight = () => {
+    if (local.recommendList.length <= 4) {
+        return { height: "200px" }
+    }
+}
+
+const handleKindImg = () => {
+    if (local.recommendList.length <= 4) {
+        return { height: "160px" }
+    }
+}
+
+const drugKindImg: string = "https://iconfont.alicdn.com/t/7a91a623-667b-412d-803c-ad0848e4124c.png@500h_500w.png";
+
+const getRecommend = () => {
+    axios.get(Constant.BASE_URL + '/recommend').then(res => {
+        if (res.data.code === 200) {
+            local.recommendList = res.data.data;
+        }
+    })
+}
+
+const toDrugItem = (id:number) => {
+    router.push("/drug/"+id)
 }
 
 </script>
@@ -57,26 +75,24 @@ function getCardWidth() {
 }
 
 .el-aside {
-    width: 300px;
+    width: 18vw;
 }
 
 .drugKind {
-    /* flex: 2; */
-    /* width: 100%; */
     height: 401px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .drugItem {
     flex: 1;
-    /* width: 290px; */
+    width: 15vw;
     height: 200px;
 }
 
-.image {
-    height: 100px;
-    width: 100px;
+.imageItem {
+    height: 120px;
 }
 </style>
