@@ -19,7 +19,12 @@ public class CommonController {
     }
 
     @GetMapping("/recommend")
-    public CommonResult getHomeRecommend(){
+    public CommonResult getHomeRecommend() {
         return commonService.getHomeRecommend();
+    }
+
+    @GetMapping("/drug")
+    public CommonResult getDrugs(@RequestParam Integer drugId) {
+        return commonService.getDrugInfo(drugId);
     }
 }
