@@ -5,18 +5,19 @@
                 <HomeHeader />
             </el-header>
             <el-main>
-                <router-view></router-view>
+                <router-view :key="route.fullPath"></router-view>
             </el-main>
         </el-container>
     </div>
 </template>
 
 <script setup lang='ts'>
+import { useRoute } from 'vue-router';
 import HomeHeader from './HomeHeader.vue';
-
+const route = useRoute()
 </script>
 
-<style>
+<style scoped>
 .home-container {
     padding: 0 10vw;
 }

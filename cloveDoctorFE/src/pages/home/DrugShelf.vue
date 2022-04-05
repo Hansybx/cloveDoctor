@@ -63,13 +63,13 @@ const getRecommend = () => {
     })
 }
 
-const toDrugItem = (id:number) => {
-    router.push("/drug/"+id)
+const toDrugItem = (id: number) => {
+    router.push("/drug/" + id)
 }
 
 </script>
 
-<style>
+<style scoped>
 .shelf-container {
     margin-bottom: 30px;
 }
@@ -79,6 +79,7 @@ const toDrugItem = (id:number) => {
 }
 
 .drugKind {
+    margin-top: 19px;
     height: 401px;
     display: flex;
     flex-direction: column;
@@ -88,7 +89,7 @@ const toDrugItem = (id:number) => {
 
 .drugItem {
     flex: 1;
-    width: 15vw;
+    width: 14vw;
     height: 200px;
 }
 

@@ -27,7 +27,7 @@ const searchHint: string = "搜索本店药品";
 const swiperInterval: number = 2700;
 </script>
 
-<style>
+<style scoped>
 .search-container {
     padding: 15px 0;
     height: 50px;

@@ -60,7 +60,7 @@ function toLogin(): void {
 }
 </script>
 
-<style>
+<style scoped>
 .bg-purple {
     background: #d3dce6;
 }

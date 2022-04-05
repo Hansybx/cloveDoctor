@@ -42,7 +42,7 @@ import { Ref, ref } from 'vue';
 let price: Ref<number> = ref(0);
 </script>
 
-<style>
+<style scoped>
 .cart-container {
     display: flex;
 }

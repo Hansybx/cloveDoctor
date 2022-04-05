@@ -23,7 +23,7 @@ const spaceSize: number = 50;
 
 </script>
 
-<style>
+<style scoped>
 .box-card {
     flex: 1;
     min-width: 200px;

@@ -159,7 +159,7 @@ const loginFormPost = (uri: string) => {
 
 </script>
 
-<style>
+<style scoped>
 .background {
     background-size: cover;
     background-repeat: no-repeat;
