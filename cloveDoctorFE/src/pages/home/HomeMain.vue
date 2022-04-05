@@ -1,11 +1,11 @@
 <template>
     <!-- 搜索 -->
     <div class="search-container">
-        <el-input v-model="searchInput" :placeholder="searchHint" clearable />
-        <el-button class="searchBtn" type="primary" :icon="Search">搜索</el-button>
+        <el-input v-model="searchInput" :placeholder="searchHint" size="large" clearable />
+        <el-button class="searchBtn" type="primary" :icon="Search" size="large">搜索</el-button>
     </div>
     <el-row class="swiper-container">
-        <HomeCategories />
+        <!-- <HomeCategories /> -->
         <el-carousel class="carousel-container" :interval="swiperInterval">
             <el-carousel-item v-for="item in 4" :key="item">
                 <h3>{{ item }}</h3>
