@@ -1,14 +1,10 @@
 <template>
-    <!-- 搜索 -->
-    <div class="search-container">
-        <el-input v-model="searchInput" :placeholder="searchHint" size="large" clearable />
-        <el-button class="searchBtn" type="primary" :icon="Search" size="large">搜索</el-button>
-    </div>
+    
     <el-row class="swiper-container">
         <!-- <HomeCategories /> -->
         <el-carousel class="carousel-container" :interval="swiperInterval">
-            <el-carousel-item v-for="item in 4" :key="item">
-                <h3>{{ item }}</h3>
+            <el-carousel-item v-for="item in local.swiperList" :key="item">
+                <el-image :src="item.imgUrl" @click="toDrugItem()" />
             </el-carousel-item>
         </el-carousel>
     </el-row>
@@ -20,28 +16,38 @@ import { Search } from '@element-plus/icons-vue'
 
 import HomeCategories from './HomeCategories.vue';
 import DrugShelf from './DrugShelf.vue'
-import { ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
+import Constant from '../../common/config';
+import axios from 'axios';
+import router from '../../router/router';
+
+onMounted(() => {
+    getSwiper();
+})
+
+const local = reactive({
+    swiperList: []
+})
 
 const searchInput = ref('');
 const searchHint: string = "搜索本店药品";
 const swiperInterval: number = 2700;
+
+const getSwiper = () => {
+    axios.get(Constant.BASE_URL + '/swiper').then(res => {
+        if (res.data.code === 200) {
+            local.swiperList = res.data.data;
+        }
+    })
+}
+
+const toDrugItem = (id: number) => {
+    router.push("/drug/" + id)
+}
+
 </script>
 
 <style scoped>
-.search-container {
-    padding: 15px 0;
-    height: 50px;
-    display: flex;
-}
-
-.searchBtn {
-    height: 45px;
-    width: 200px;
-}
-
-.el-input__inner {
-    height: 45px;
-}
 
 .swiper-container {
     margin-bottom: 25px;

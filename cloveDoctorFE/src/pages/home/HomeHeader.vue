@@ -1,11 +1,14 @@
 <template>
     <el-row>
-        <el-col :span="12">
+        <el-col :span="8">
             <div class="logo-container">
                 <img class="logo" src="../../assets/pharmacyLogo.png" />
                 <!-- <span class="text-container">茯苓药店</span> -->
                 <el-button @click="toHome" class="text-container" type="text">茯苓药店</el-button>
             </div>
+        </el-col>
+        <el-col class="logo-container" :span="4">
+            <el-button @click="toShopCenter" class="text-container" type="text" :icon="Goods">药品中心</el-button>
         </el-col>
         <el-col class="logo-container" :span="4">
             <!-- <div class="logo-container">
@@ -39,12 +42,16 @@
 </template>
 
 <script setup lang='ts'>
-import { Message, ShoppingCart, User } from '@element-plus/icons-vue'
+import { Message, ShoppingCart, User, Goods } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router';
 const router = useRouter()
 
 function toHome(): void {
     router.push('/home');
+}
+
+function toShopCenter(){
+    router.push('/shopping');
 }
 
 function toMsg(): void {

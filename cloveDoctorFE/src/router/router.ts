@@ -17,6 +17,10 @@ const routes = [
                 component: () => import("../pages/cart/cart.vue"),
             },
             {
+                path: '/shopping',
+                component: () => import("../pages/shoppingCenter/ShoppingCenter.vue"),
+            },
+            {
                 path: '/message',
                 component: () => import("../pages/message/MessagePage.vue"),
             },
