@@ -27,6 +27,11 @@ public class DrugsService {
 //    public CommonResult (DrugsDTO drugsDTO){
 //        return CommonResponse.Success();
 //    }
+    public Long drugNums(){
+        DrugsExample drugsExample = new DrugsExample();
+        drugsExample.createCriteria();
+        return drugsMapper.countByExample(drugsExample);
+    }
 
     public CommonResult addDrug(DrugsDTO drugsDTO) {
         Drugs drugs = new Drugs();
@@ -109,7 +114,7 @@ public class DrugsService {
         List<Drugs> drugsList = drugsExtMapper.search(keyword, status);
 
         HashMap<String, Object> map = new HashMap<>();
-        map.put("totalNum", drugsList.size());
+        map.put("totalNum", drugNums());
         map.put("drugList", drugsList);
         return CommonResponse.Success(map);
     }
