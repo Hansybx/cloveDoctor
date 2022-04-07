@@ -55,6 +55,7 @@ public class UserController {
         if (userDTO.getCaptcha().equals(lineCaptcha.getCode())) {
             return userService.login(userDTO);
         }
+//        {code: 200, message: "登录成功", data: {id: 3, username: "123", password: "123456", type: "USER"}}
         return CommonResponse.Fail("验证码不正确！");
     }
 

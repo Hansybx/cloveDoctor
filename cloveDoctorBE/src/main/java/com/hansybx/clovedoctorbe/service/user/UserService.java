@@ -6,7 +6,6 @@ import com.hansybx.clovedoctorbe.common.CommonResult;
 import com.hansybx.clovedoctorbe.mapper.UserMapper;
 import com.hansybx.clovedoctorbe.model.User;
 import com.hansybx.clovedoctorbe.model.UserExample;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -35,7 +34,7 @@ public class UserService {
                 .andPasswordEqualTo(userDTO.getPassword());
         List<User> userList= userMapper.selectByExample(userExample);
         if (userList.size() == 1) {
-            return CommonResponse.Success("登录成功", "");
+            return CommonResponse.Success("登录成功", userList.get(0));
         }
         return CommonResponse.Fail("登录失败");
     }
