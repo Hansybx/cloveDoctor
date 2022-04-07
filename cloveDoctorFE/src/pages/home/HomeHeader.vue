@@ -3,7 +3,6 @@
         <el-col :span="8">
             <div class="logo-container">
                 <img class="logo" src="../../assets/pharmacyLogo.png" />
-                <!-- <span class="text-container">茯苓药店</span> -->
                 <el-button @click="toHome" class="text-container" type="text">茯苓药店</el-button>
             </div>
         </el-col>
@@ -11,42 +10,45 @@
             <el-button @click="toShopCenter" class="text-container" type="text" :icon="Goods">药品中心</el-button>
         </el-col>
         <el-col class="logo-container" :span="4">
-            <!-- <div class="logo-container">
-                <el-icon :size="26" class="icon-container">
-                    <message />
-                </el-icon>
-                <span @click="toMsg" class="text-container">我的消息</span>
-            </div>-->
             <el-button @click="toMsg" class="text-container" type="text" :icon="Message">我的消息</el-button>
         </el-col>
         <el-col class="logo-container" :span="4">
             <!-- 购物车内商品降价通知 -->
-            <!-- <div class="logo-container">
-                <el-icon :size="26" class="icon-container">
-                    <shopping-cart />
-                </el-icon>
-                <span class="text-container">购物车</span>
-            </div>-->
             <el-button @click="toCart" class="text-container" type="text" :icon="ShoppingCart">购物车</el-button>
         </el-col>
-        <el-col class="logo-container" :span="4">
-            <!-- <div class="logo-container">
-                <el-icon :size="26" class="icon-container">
-                    <user />
-                </el-icon>
-                <span class="text-container">登录</span>
-            </div>-->
+        <el-col v-if="user.userId < 0" class="logo-container" :span="4">
             <el-button @click="toLogin()" class="text-container" type="text" :icon="User">登录</el-button>
+        </el-col>
+        <el-col v-else class="logo-container" :span="4">
+            <el-dropdown @command="handleCommand">
+                <el-button class="text-container" type="text" :icon="User">
+                    {{ user.userName }}
+                    <el-icon class="el-icon--right">
+                        <arrow-down />
+                    </el-icon>
+                </el-button>
+                <template #dropdown>
+                    <el-dropdown-menu>
+                        <el-dropdown-item command="/user/order">我的订单</el-dropdown-item>
+                        <el-dropdown-item
+                            v-if="user.userType === admin"
+                            command="/admin/swiper"
+                        >管理系统</el-dropdown-item>
+                        <el-dropdown-item command="/">退出</el-dropdown-item>
+                    </el-dropdown-menu>
+                </template>
+            </el-dropdown>
         </el-col>
     </el-row>
 </template>
 
 <script setup lang='ts'>
-import { Message, ShoppingCart, User, Goods } from '@element-plus/icons-vue'
-import { de } from 'element-plus/lib/locale';
+import { Message, ShoppingCart, User, Goods, ArrowDown } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router';
 import { useUserStore } from '../../stores/UserInfo';
 const router = useRouter()
+const user = useUserStore();
+const admin = 'ADMIN'
 
 function toHome(): void {
     router.push('/home');
@@ -67,6 +69,14 @@ function toCart(): void {
 function toLogin(): void {
     router.replace('/login');
 }
+
+const handleCommand = (command: string) => {
+    if (command === '/') {
+        user.$reset()
+    }
+    router.replace(command)
+}
+
 </script>
 
 <style scoped>

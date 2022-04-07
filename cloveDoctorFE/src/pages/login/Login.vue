@@ -74,14 +74,14 @@
 </template>
 
 <script setup lang='ts'>
-import { reactive, onMounted, ref, onBeforeMount, inject } from 'vue';
+import { reactive, onMounted, ref } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
 import { ElMessage } from 'element-plus';
 import type { FormInstance } from 'element-plus'
 import axios from 'axios'
 import Constant from '../../common/config';
 import router from '../../router/router';
-import getGlobalProperties from '../../hooks/useGlobal';
+import { useUserStore } from '../../stores/UserInfo';
 
 // mounted
 onMounted(() => {
@@ -89,6 +89,7 @@ onMounted(() => {
 })
 
 const UUID = uuidv4();
+const user = useUserStore();
 const imgUrl = ref(Constant.BASE_URL_USER + '/captcha');
 const capthcaRefresh = () => {
     imgUrl.value += "?time=" + new Date().getTime();
@@ -148,6 +149,7 @@ const loginFormPost = (uri: string) => {
                 message: res.data.message,
                 type: 'success'
             });
+            user.loginSuccess(res.data.data)
             router.replace({ path: "/home" });
         } else if (res.data.code === 400) {
             ElMessage.error(res.data.message)
