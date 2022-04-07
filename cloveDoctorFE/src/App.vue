@@ -1,5 +1,7 @@
 <template>
-  <router-view></router-view>
+  <keep-alive>
+    <router-view></router-view>
+  </keep-alive>
 </template>
 
 <script setup lang="ts">
@@ -13,5 +15,4 @@
   text-align: center;
   color: #2c3e50;
 }
-
 </style>

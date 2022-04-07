@@ -1,8 +1,11 @@
 <template>
-    
     <el-row class="swiper-container">
         <!-- <HomeCategories /> -->
-        <el-carousel class="carousel-container" :interval="swiperInterval">
+        <el-carousel
+            v-if="local.swiperList.length > 0"
+            class="carousel-container"
+            :interval="swiperInterval"
+        >
             <el-carousel-item v-for="item in local.swiperList" :key="item">
                 <el-image :src="item.imgUrl" @click="toDrugItem()" />
             </el-carousel-item>
@@ -48,7 +51,6 @@ const toDrugItem = (id: number) => {
 </script>
 
 <style scoped>
-
 .swiper-container {
     margin-bottom: 25px;
 }

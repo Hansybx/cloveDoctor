@@ -149,8 +149,8 @@ const loginFormPost = (uri: string) => {
                 message: res.data.message,
                 type: 'success'
             });
-            user.loginSuccess(res.data.data)
             router.replace({ path: "/home" });
+            user.loginSuccess(res.data.data)
         } else if (res.data.code === 400) {
             ElMessage.error(res.data.message)
         } else {
