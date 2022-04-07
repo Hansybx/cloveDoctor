@@ -1,5 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import { useUserStore } from '../stores/UserInfo'
 // import Home from '../pages/home/home.vue'
+
+const admin = "ADMIN";
 
 const routes = [
     { path: '/', redirect: '/home' },
@@ -15,6 +18,7 @@ const routes = [
             {
                 path: '/cart',
                 component: () => import("../pages/cart/cart.vue"),
+                meta: { isLogin: true }
             },
             {
                 path: '/shopping',
@@ -25,7 +29,7 @@ const routes = [
                 component: () => import("../pages/message/MessagePage.vue"),
             },
             {
-                path:'/drug/:id',
+                path: '/drug/:id',
                 component: () => import("../pages/drug/drug.vue"),
             }
         ]
@@ -43,26 +47,32 @@ const routes = [
             {
                 path: '',
                 component: () => import("../pages/admin/swiper/swiper.vue"),
+                meta: { isAdmin: true }
             },
             {
                 path: '/admin/drugs',
                 component: () => import("../pages/admin/drugs/drugs.vue"),
+                meta: { isAdmin: true }
             },
             {
                 path: '/admin/user',
                 component: () => import("../pages/admin/user/user.vue"),
+                meta: { isAdmin: true }
             },
             {
                 path: '/admin/orders',
                 component: () => import("../pages/admin/order/order.vue"),
+                meta: { isAdmin: true }
             },
             {
                 path: '/admin/main/swiper',
                 component: () => import("../pages/admin/swiper/swiper.vue"),
+                meta: { isAdmin: true }
             },
             {
                 path: '/admin/main/recommend',
                 component: () => import("../pages/admin/recommend/recommend.vue"),
+                meta: { isAdmin: true }
             },
         ]
     }
@@ -74,4 +84,21 @@ const router = createRouter({
     routes, // `routes: routes` 的缩写
 })
 
+router.beforeEach((to, from) => {
+    const user = useUserStore();
+    
+    if (to.meta.isLogin) {
+        if (user.userId < 0) {
+            router.push('/login')
+        }
+    }
+
+    if (to.meta.isAdmin) {
+        if (user.userType !== admin) {
+            return false;
+        }
+    }
+})
+
 export default router;
+

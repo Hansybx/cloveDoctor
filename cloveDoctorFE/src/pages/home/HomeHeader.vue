@@ -43,14 +43,16 @@
 
 <script setup lang='ts'>
 import { Message, ShoppingCart, User, Goods } from '@element-plus/icons-vue'
+import { de } from 'element-plus/lib/locale';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '../../stores/UserInfo';
 const router = useRouter()
 
 function toHome(): void {
     router.push('/home');
 }
 
-function toShopCenter(){
+function toShopCenter() {
     router.push('/shopping');
 }
 
