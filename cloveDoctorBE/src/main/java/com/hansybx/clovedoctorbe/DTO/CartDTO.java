@@ -1,4 +1,6 @@
 package com.hansybx.clovedoctorbe.DTO;
 
-public class CartDTO {
+import com.hansybx.clovedoctorbe.model.Cart;
+
+public class CartDTO extends Cart {
 }

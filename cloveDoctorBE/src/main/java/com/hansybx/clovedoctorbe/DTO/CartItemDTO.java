@@ -1,4 +1,11 @@
 package com.hansybx.clovedoctorbe.DTO;
 
-public class CartItemDTO {
+import com.hansybx.clovedoctorbe.model.Cart;
+import lombok.Data;
+
+@Data
+public class CartItemDTO extends Cart {
+    private String drugImg;
+    private String drugName;
+    private Float price;
 }

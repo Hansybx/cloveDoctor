@@ -94,5 +94,8 @@
         <table tableName="recommendDrugs" domainObjectName="RecommendDrugs">
             <property name="useActualColumnNames" value="true" />
         </table>
+        <table tableName="cart" domainObjectName="Cart">
+            <property name="useActualColumnNames" value="true" />
+        </table>
     </context>
 </generatorConfiguration>
