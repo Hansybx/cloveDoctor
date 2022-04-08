@@ -1,27 +1,45 @@
 <template>
-    <!-- <el-col class="cart-container">
-        <el-button round class="btn-container">移出购物车</el-button>
-        <el-affix position="bottom" :offset="20">
-            <el-button type="primary">Offset bottom 20px</el-button>
-        </el-affix>
-    </el-col>-->
-    <el-row>
-        <el-col :span="20"></el-col>
-        <el-col :span="4">
-            <el-button round>移出购物车</el-button>
-        </el-col>
-    </el-row>
     <div class="cart-items-container">
-        <el-card class="card-item-container" shadow="hover" v-for="item in 4" :key="item">
+        <el-pagination
+            class="page-container"
+            background
+            layout="prev, pager, next"
+            :total="state.totalNum"
+            :page-size="state.pageSize"
+            :current-page="state.currentPage"
+            @current-change="changeDrugPage"
+            hide-on-single-page
+        />
+        <el-card
+            class="card-item-container"
+            shadow="hover"
+            v-for="item in state.tableData"
+            :key="item"
+        >
             <div class="card-item">
-                <img
-                    src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-                    class="itemImage"
-                />
-                <el-col class="card-item-content">
-                    <div v-for="o in 4" :key="o">{{ 'List item ' + o }}</div>
-                </el-col>
+                <el-checkbox class="checkbox-container" v-model="radio1" />
+                <el-image :src="item.drugImg" class="itemImage"></el-image>
+                <el-form
+                    label-position="right"
+                    label-width="100px"
+                    :model="item"
+                    class="card-item-content"
+                >
+                    <el-form-item label="名称">
+                        <div>{{ item.drugName }}</div>
+                    </el-form-item>
+                    <el-form-item label="价格￥">
+                        <div>{{ item.price }}元</div>
+                    </el-form-item>
+                    <el-form-item label="添加时间">
+                        <div>{{ moment(item.updateTime).format().slice(0, -6) }}</div>
+                    </el-form-item>
+                    <el-form-item label="数量">
+                        <div>{{ item.drugNum }}</div>
+                    </el-form-item>
+                </el-form>
             </div>
+            <el-button class="cart-btn" round @click="removeItem(item.id)">移出购物车</el-button>
         </el-card>
     </div>
     <el-affix class="payment-container" position="bottom" :offset="20">
@@ -37,16 +55,78 @@
 </template>
 
 <script setup lang='ts'>
-import { Ref, ref } from 'vue';
+import axios from 'axios';
+import { onMounted, reactive, Ref, ref } from 'vue';
+import Constant from '../../common/config';
+import { useUserStore } from '../../stores/UserInfo';
+import cart from './cart';
+import moment from 'moment'
+import { ElMessage } from 'element-plus';
+
+const user = useUserStore()
+const state = reactive({
+    tableData: [] as cart[],
+    totalNum: 0,
+    pageSize: 10,
+    currentPage: 1,
+})
+const radio1 = ref('1')
+
+onMounted(() => {
+    getCartList()
+})
 
 let price: Ref<number> = ref(0);
+
+const changeDrugPage = (val: number) => {
+    state.currentPage = val;
+    getCartList();
+}
+
+const getCartList = () => {
+    axios.get(Constant.BASE_URL_USER + '/cart', {
+        params: {
+            userId: user.userId,
+            pageNum: state.currentPage,
+            pageSize: state.pageSize
+        }
+    }).then(res => {
+        if (res.data.code === 200) {
+            console.log(res.data);
+            state.tableData = res.data.data.cartList;
+            state.totalNum = res.data.data.total;
+        }
+    })
+}
+
+const removeItem = (id: number) => {
+    const param = { id: id }
+    axios.post(Constant.BASE_URL_USER + '/cart/del', param).then(res => {
+        if (res.data.code === 200) {
+            ElMessage({
+                message: res.data.message,
+                type: 'success'
+            })
+            getCartList();
+        } else if (res.data.code === 400) {
+            ElMessage.error(res.data.message)
+        } else {
+            ElMessage.error('糟糕，失败了！')
+        }
+    })
+}
+
 </script>
 
 <style scoped>
-.cart-container {
-    display: flex;
+.page-container {
+    justify-content: center;
 }
 
+.checkbox-container {
+    margin-top: 50px;
+    margin-right: 20px;
+}
 .cart-items-container {
     width: 100%;
 }
@@ -63,6 +143,11 @@ let price: Ref<number> = ref(0);
     align-items: flex-start;
     flex-direction: column;
     margin-left: 10px;
+}
+
+.cart-btn {
+    float: right;
+    margin-top: -30px;
 }
 
 .itemImage {

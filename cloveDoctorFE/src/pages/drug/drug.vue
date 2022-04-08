@@ -13,37 +13,37 @@
                 </el-form-item>
                 <el-form-item label="价格￥">
                     <div>{{ drugInfo.price }}元</div>
-                    <!-- <el-input v-model="formLabelAlign.region" /> -->
                 </el-form-item>
                 <el-form-item label="有效期至">
                     <div>{{ drugInfo.updateTime }}</div>
-                    <!-- <el-date-picker v-model="value1" type="date" placeholder="Pick a day" disabled /> -->
                 </el-form-item>
 
                 <el-form-item label="库存数量">
                     <div>{{ drugInfo.stock }}</div>
-                    <!-- <el-input v-model="input" disabled placeholder="Please input" /> -->
                 </el-form-item>
                 <el-form-item label="生产厂家">
                     <div>asd</div>
-                    <!-- <el-input v-model="formLabelAlign.region" /> -->
                 </el-form-item>
                 <el-form-item label="购买数量">
                     <div>asd</div>
-                    <!-- <el-input-number v-model="num" :min="1" :max="10" @change="handleChange" /> -->
                 </el-form-item>
             </el-form>
         </el-card>
         <el-image :src="rightImg" class="right-img" />
     </div>
     <el-button-group class="btn-group">
-        <el-button type="primary" :icon="ShoppingBag">加入购物车</el-button>
-        <el-button type="primary">购买本商品<el-icon><present /></el-icon></el-button>
+        <el-button type="primary" :icon="ShoppingBag" @click="addToCart()">加入购物车</el-button>
+        <el-button type="primary">
+            购买本商品
+            <el-icon>
+                <present />
+            </el-icon>
+        </el-button>
     </el-button-group>
 </template>
 
 <script setup lang='ts'>
-import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { onMounted, reactive } from 'vue'
 import {
     Present,
     ShoppingBag
@@ -51,8 +51,14 @@ import {
 import axios from 'axios';
 import Constant from '../../common/config';
 import { useRoute } from 'vue-router';
+import { useCartStore } from '../../stores/shoppingCart';
+import { useUserStore } from '../../stores/UserInfo';
+import router from '../../router/router';
+import { ElMessage } from 'element-plus';
 
 const route = useRoute()
+const cart = useCartStore()
+const user = useUserStore()
 onMounted(() => {
     getDrugInfo();
     console.log(route.matched, route.params)
@@ -80,9 +86,34 @@ const getDrugInfo = () => {
             drugInfo.price = data.price;
             drugInfo.stock = data.stock;
             drugInfo.updateTime = data.updateTime;
-            console.log(res.data.data);
         }
     })
+}
+
+const addToCart = () => {
+    if (user.userId < 0) {
+        router.push('/login')
+    } else {
+        const param = {
+            userId: user.userId,
+            drugId: Number(route.params.id),
+            drugNum: 1
+        }
+        axios.post(Constant.BASE_URL_USER + '/drug/add', param).then(res => {
+            if (res.data.code === 200) {
+                ElMessage({
+                    message: res.data.message,
+                    type: 'success'
+                })
+                cart.addCart({ drugId: Number(route.params.id), drugNums: 1 });
+            } else if (res.data.code === 400) {
+                ElMessage.error(res.data.message)
+            } else {
+                ElMessage.error('糟糕，添加失败了！')
+            }
+        })
+
+    }
 }
 
 </script>
@@ -107,7 +138,7 @@ const getDrugInfo = () => {
     width: 20vw;
 }
 
-.btn-group{
+.btn-group {
     margin-top: 90px;
 }
 

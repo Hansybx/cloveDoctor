@@ -32,7 +32,7 @@
                         <el-dropdown-item command="/user/order">我的订单</el-dropdown-item>
                         <el-dropdown-item
                             v-if="user.userType === admin"
-                            command="/admin/swiper"
+                            command="/admin"
                         >管理系统</el-dropdown-item>
                         <el-dropdown-item command="/">退出</el-dropdown-item>
                     </el-dropdown-menu>
