@@ -75,7 +75,6 @@
 
 <script setup lang='ts'>
 import { reactive, onMounted, ref } from 'vue';
-import { v4 as uuidv4 } from 'uuid';
 import { ElMessage } from 'element-plus';
 import type { FormInstance } from 'element-plus'
 import axios from 'axios'
@@ -88,7 +87,6 @@ onMounted(() => {
     console.log('Component is mounted!')
 })
 
-const UUID = uuidv4();
 const user = useUserStore();
 const imgUrl = ref(Constant.BASE_URL_USER + '/captcha');
 const capthcaRefresh = () => {

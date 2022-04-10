@@ -7,3 +7,10 @@ export default interface cart {
     price: number
     updateTime: string
 }
+
+export interface drugListItem {
+    drugId: number
+    drugName: string
+    drugNum: number
+    drugPrice: number
+}

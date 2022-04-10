@@ -9,7 +9,7 @@
             class="card-item-container"
             shadow="hover"
             v-for="item in state.tableData"
-            :key="item"
+            :key="item.id"
             @click="toDrugItem(item.id)"
         >
             <div class="card-item">
@@ -52,9 +52,10 @@ import { Search } from '@element-plus/icons-vue'
 import { onMounted, reactive } from 'vue';
 import Constant from '../../common/config';
 import router from '../../router/router';
+import drugItem from './drugItem';
 
 const state = reactive({
-    tableData: [],
+    tableData: [] as drugItem[],
     totalNum: 10,
     pageSize: 5,
     currentPage: 1,

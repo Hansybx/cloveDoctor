@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { drugListItem } from '../pages/cart/cart';
 
 interface cartItem {
     drugId: number
@@ -7,7 +8,10 @@ interface cartItem {
 
 export const useCartStore = defineStore({
     id: 'shoppingCart',
-    state: () => ({ cartItemList: [] as cartItem[] }),
+    state: () => ({
+        cartItemList: [] as cartItem[],
+        purchaseList: [] as drugListItem[]
+    }),
 
     actions: {
         cartInit(cartItems: cartItem[]) {
@@ -27,9 +31,10 @@ export const useCartStore = defineStore({
             const existItem = this.cartItemList.find((item) => item.drugId === cartItem.drugId)
             if (existItem) {
                 const index = this.cartItemList.indexOf(existItem);
-                this.cartItemList.splice(index,1);
+                this.cartItemList.splice(index, 1);
             }
         }
+
     },
     persist: {
         enabled: true

@@ -25,7 +25,7 @@
                     <div>asd</div>
                 </el-form-item>
                 <el-form-item label="购买数量">
-                    <div>asd</div>
+                    <el-input-number v-model="drugInfo.num" :min="1" :max="drugInfo.stock" />
                 </el-form-item>
             </el-form>
         </el-card>
@@ -33,7 +33,7 @@
     </div>
     <el-button-group class="btn-group">
         <el-button type="primary" :icon="ShoppingBag" @click="addToCart()">加入购物车</el-button>
-        <el-button type="primary">
+        <el-button type="primary" @click="getHTML()">
             购买本商品
             <el-icon>
                 <present />
@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang='ts'>
-import { onMounted, reactive } from 'vue'
+import { nextTick, onMounted, reactive, ref } from 'vue'
 import {
     Present,
     ShoppingBag
@@ -55,6 +55,9 @@ import { useCartStore } from '../../stores/shoppingCart';
 import { useUserStore } from '../../stores/UserInfo';
 import router from '../../router/router';
 import { ElMessage } from 'element-plus';
+import { v4 as uuidv4 } from 'uuid';
+import drugTrade from './DrugTrade';
+
 
 const route = useRoute()
 const cart = useCartStore()
@@ -68,9 +71,11 @@ const rightImg = "https://iconfont.alicdn.com/t/e4e56e8b-60a7-4090-a0cd-d963714f
 const drugInfo = reactive({
     drugImg: '',
     drugName: '',
-    price: null,
-    stock: null,
+    num: 1,
+    price: 1,
+    stock: 1,
     updateTime: '',
+    payHTML: '',
 })
 
 const getDrugInfo = () => {
@@ -97,7 +102,7 @@ const addToCart = () => {
         const param = {
             userId: user.userId,
             drugId: Number(route.params.id),
-            drugNum: 1
+            drugNum: drugInfo.num
         }
         axios.post(Constant.BASE_URL_USER + '/drug/add', param).then(res => {
             if (res.data.code === 200) {
@@ -114,6 +119,43 @@ const addToCart = () => {
         })
 
     }
+}
+
+const getHTML = () => {
+    const param: drugTrade = {
+        outTradeNo: uuidv4(),
+        totalAmount: drugInfo.price * drugInfo.num,
+        subject: drugInfo.drugName,
+        userId: user.userId,
+        returnUrl:'http://localhost:3000/#/shopping',
+        drugList: [
+            {
+                drugId: Number(route.params.id),
+                drugName: drugInfo.drugName,
+                drugNum: drugInfo.num,
+                drugPrice: drugInfo.price * drugInfo.num,
+            }
+        ]
+    }
+    axios.post(Constant.BASE_URL_USER + '/trade', param).then(res => {
+        if (res.data.code === 200) {
+            drugInfo.payHTML = res.data.data.body
+            console.log(drugInfo.payHTML);
+            // nextTick(() => {
+            //     document.forms[0].submit()
+            // })
+            const div = document.createElement('div')
+            /* 下面的data.content就是后台返回接收到的数据 */
+            div.innerHTML = res.data.data.body
+            document.body.appendChild(div)
+            document.forms[1].submit()
+
+        } else if (res.data.code === 400) {
+            ElMessage.error(res.data.message)
+        } else {
+            ElMessage.error('糟糕,失败了！')
+        }
+    })
 }
 
 </script>
