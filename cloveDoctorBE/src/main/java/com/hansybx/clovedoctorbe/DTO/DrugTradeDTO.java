@@ -2,14 +2,14 @@ package com.hansybx.clovedoctorbe.DTO;
 
 import lombok.Data;
 
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
 
 @Data
-public class TradePreCreateDTO {
+public class DrugTradeDTO {
     private String outTradeNo;
-    private String totalAmount;
+    private BigDecimal totalAmount;
     private String subject;
-    private String userId;
-    private List<Map<String,Object>> 
+    private Integer userId;
+    private DrugTradeListDTO[] drugList;
+    private String returnUrl;
 }

@@ -97,5 +97,8 @@
         <table tableName="cart" domainObjectName="Cart">
             <property name="useActualColumnNames" value="true" />
         </table>
+        <table tableName="trade" domainObjectName="Trade">
+            <property name="useActualColumnNames" value="true" />
+        </table>
     </context>
 </generatorConfiguration>

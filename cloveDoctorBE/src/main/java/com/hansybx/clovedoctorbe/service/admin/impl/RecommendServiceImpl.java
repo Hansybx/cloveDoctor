@@ -27,7 +27,7 @@ public class RecommendServiceImpl implements RecommendService {
 
     @Override
     public CommonResult addRecommedDrug(DrugsDTO[] recommendDrugsDTOs) {
-        for(DrugsDTO recommendDrugsDTO:recommendDrugsDTOs){
+        for (DrugsDTO recommendDrugsDTO : recommendDrugsDTOs) {
             RecommendDrugs drugs = new RecommendDrugs();
             drugs.setDrugId(recommendDrugsDTO.getId());
             drugs.setAddDate(new Date());
@@ -42,11 +42,11 @@ public class RecommendServiceImpl implements RecommendService {
 
     @Override
     public CommonResult getRecommendDrugs(Integer pageNum, Integer pageSize) {
-        List<RecommendDrugsDTO> recommendDrugsDTOS = recommendDrugsExtMapper.selectAll(pageNum-1, pageSize);
+        List<RecommendDrugsDTO> recommendDrugsDTOS = recommendDrugsExtMapper.selectAll(pageNum - 1, pageSize);
         if (recommendDrugsDTOS.size() > 0) {
-            Map<String,Object> map = new HashMap<>();
-            map.put("recommendList",recommendDrugsDTOS);
-            map.put("totalNum",recommendDrugsMapper.countByExample(new RecommendDrugsExample()));
+            Map<String, Object> map = new HashMap<>();
+            map.put("recommendList", recommendDrugsDTOS);
+            map.put("totalNum", recommendDrugsMapper.countByExample(new RecommendDrugsExample()));
             return CommonResponse.Success(map);
         } else {
             return CommonResponse.Success("没有推荐药品", null);

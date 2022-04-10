@@ -26,7 +26,7 @@ public class CartService {
         cartExample.createCriteria().andUserIdEqualTo(userId);
         Long total = cartMapper.countByExample(cartExample);
 
-        List<CartItemDTO> cartList = cartExtMapper.selectCartPage(userId,pageNum-1,pageSize);
+        List<CartItemDTO> cartList = cartExtMapper.selectCartPage(userId, pageNum - 1, pageSize);
 
         Map<String, Object> map = new HashMap<>();
         map.put("cartList", cartList);
@@ -54,7 +54,7 @@ public class CartService {
         if (exist > 0) {
             List<Cart> cartList = cartMapper.selectByExample(cartExample);
             Cart cartUpdate = cartList.get(0);
-            cartUpdate.setDrugNum(cartUpdate.getDrugNum()+cartDTO.getDrugNum());
+            cartUpdate.setDrugNum(cartUpdate.getDrugNum() + cartDTO.getDrugNum());
             cartUpdate.setUpdateTime(cartDTO.getUpdateTime());
             res = cartMapper.updateByExample(cartUpdate, cartExample);
         } else {
@@ -66,9 +66,9 @@ public class CartService {
         return CommonResponse.Fail("添加失败");
     }
 
-    public CommonResult removeCartItem(Integer id){
+    public CommonResult removeCartItem(Integer id) {
         int res = cartMapper.deleteByPrimaryKey(id);
-        if(res>0) return CommonResponse.Success("移除成功","");
-        return  CommonResponse.Fail("移除失败");
+        if (res > 0) return CommonResponse.Success("移除成功", "");
+        return CommonResponse.Fail("移除失败");
     }
 }

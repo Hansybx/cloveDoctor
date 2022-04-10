@@ -24,10 +24,10 @@ public class DrugsService {
     @Resource
     DrugsExtMapper drugsExtMapper;
 
-//    public CommonResult (DrugsDTO drugsDTO){
+    //    public CommonResult (DrugsDTO drugsDTO){
 //        return CommonResponse.Success();
 //    }
-    public Long drugNums(){
+    public Long drugNums() {
         DrugsExample drugsExample = new DrugsExample();
         drugsExample.createCriteria();
         return drugsMapper.countByExample(drugsExample);
@@ -53,7 +53,7 @@ public class DrugsService {
         PageHelper.startPage(pageNum, pageSize, orderBy);
 
         DrugsExample drugsExample = new DrugsExample();
-        drugsExample.createCriteria();
+        drugsExample.createCriteria().andStatusEqualTo(1);
         List<Drugs> drugsList = drugsMapper.selectByExample(drugsExample);
         Long totalNum = drugsMapper.countByExample(drugsExample);
 
@@ -101,6 +101,7 @@ public class DrugsService {
     public CommonResult drugUpdate(Drugs drugsDTO) {
         DrugsExample drugsExample = new DrugsExample();
         drugsExample.createCriteria().andIdEqualTo(drugsDTO.getId());
+        if (drugsDTO.getStock() > 0) drugsDTO.setStatus(1);
         int res = drugsMapper.updateByExample(drugsDTO, drugsExample);
         if (res > 0) {
             return CommonResponse.Success();
