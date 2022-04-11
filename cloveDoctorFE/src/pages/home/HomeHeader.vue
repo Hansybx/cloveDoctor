@@ -10,7 +10,7 @@
             <el-button @click="toShopCenter" class="text-container" type="text" :icon="Goods">药品中心</el-button>
         </el-col>
         <el-col class="logo-container" :span="4">
-            <el-button @click="toMsg" class="text-container" type="text" :icon="Message">我的消息</el-button>
+            <el-button @click="toMsg" class="text-container" type="text" :icon="Message">店铺留言</el-button>
         </el-col>
         <el-col class="logo-container" :span="4">
             <!-- 购物车内商品降价通知 -->
