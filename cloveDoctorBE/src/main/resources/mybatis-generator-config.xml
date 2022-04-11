@@ -100,5 +100,8 @@
         <table tableName="trade" domainObjectName="Trade">
             <property name="useActualColumnNames" value="true" />
         </table>
+        <table tableName="message" domainObjectName="Message">
+            <property name="useActualColumnNames" value="true" />
+        </table>
     </context>
 </generatorConfiguration>

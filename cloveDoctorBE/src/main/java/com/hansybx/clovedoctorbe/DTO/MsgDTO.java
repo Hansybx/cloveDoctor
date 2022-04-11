@@ -1,4 +1,6 @@
 package com.hansybx.clovedoctorbe.DTO;
 
-public class MsgDTO {
+import com.hansybx.clovedoctorbe.model.Message;
+
+public class MsgDTO extends Message {
 }
