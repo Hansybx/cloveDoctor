@@ -17,13 +17,19 @@ public class UserService {
     UserMapper userMapper;
 
     public CommonResult register(UserDTO userDTO) {
-//        UserExample userExample = new UserExample();
-//        userExample.createCriteria().andUsernameEqualTo();
         userDTO.setType("USER");
         int res = userMapper.insert(userDTO);
         if (res > 0) {
-            return CommonResponse.Success("注册成功", "");
+            UserExample userExample = new UserExample();
+            userExample.createCriteria()
+                    .andUsernameEqualTo(userDTO.getUsername())
+                    .andPasswordEqualTo(userDTO.getPassword());
+            List<User> userList= userMapper.selectByExample(userExample);
+            if (userList.size() == 1) {
+                return CommonResponse.Success("注册成功", userList.get(0));
+            }
         }
+
         return CommonResponse.Fail("注册失败");
     }
 
