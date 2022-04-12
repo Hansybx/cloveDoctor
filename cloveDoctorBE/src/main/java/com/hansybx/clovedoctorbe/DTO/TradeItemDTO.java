@@ -1,4 +1,6 @@
 package com.hansybx.clovedoctorbe.DTO;
 
-public class TradeItemDTO {
+import com.hansybx.clovedoctorbe.model.Trade;
+
+public class TradeItemDTO extends Trade {
 }

@@ -8,8 +8,10 @@ import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.domain.AlipayTradePagePayModel;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.response.AlipayTradePagePayResponse;
+import com.github.pagehelper.PageHelper;
 import com.hansybx.clovedoctorbe.DTO.DrugTradeDTO;
 import com.hansybx.clovedoctorbe.DTO.DrugTradeListDTO;
+import com.hansybx.clovedoctorbe.DTO.TradeItemDTO;
 import com.hansybx.clovedoctorbe.common.CommonResponse;
 import com.hansybx.clovedoctorbe.common.CommonResult;
 import com.hansybx.clovedoctorbe.mapper.DrugsMapper;
@@ -17,10 +19,14 @@ import com.hansybx.clovedoctorbe.mapper.TradeMapper;
 import com.hansybx.clovedoctorbe.model.Drugs;
 import com.hansybx.clovedoctorbe.model.DrugsExample;
 import com.hansybx.clovedoctorbe.model.Trade;
+import com.hansybx.clovedoctorbe.model.TradeExample;
 import com.hansybx.clovedoctorbe.service.user.TradeService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class TradeServiceImpl implements TradeService {
@@ -28,6 +34,8 @@ public class TradeServiceImpl implements TradeService {
     private static final String alipayPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgjI/0O9t5zouJ6znqR+DrSkLwG9bMKeSo0gvZ6G0JLFiZqNq7RV7IGPiNcd3l1G0k/5Ssh+wK1EFUuHfk9sG8uZOpL4dvrF2EBu1gP41+1Kirofl7hWvlpMsTOP5tlsjBkj/ewREz+eZWJMiE3/iJGsUFeoTFgmZ/rL1zzd6mr0/cttgkTzQHcOb4tcQS3ErjosZMbebnvSQDVQ692KN1x+sRHYcvGOs8nCpUE94F9eQadWQzQto3o0qL1qpGo9Yzc0tVHTCJra6H/lCecKQGDeRu/dRcIr/RpOYOngzifL7SZgo9c5tjvRk3sG36i+f9oHUxyryyE9Jn8szwi0OKwIDAQAB";
     private static final String serverUrl = "https://openapi.alipaydev.com/gateway.do";
     private static final String APPID = "2021000119657043";
+    private static final int EXIST = 1;
+    private static final int DELETED = 0;
 
     @Resource
     TradeMapper tradeMapper;
@@ -71,12 +79,40 @@ public class TradeServiceImpl implements TradeService {
         return CommonResponse.Fail("预创建失败");
     }
 
+    @Override
+    public CommonResult getTradeList(Integer userId, Integer pageNum, Integer pageSize) {
+        String orderBy = "tradeDate desc";
+        PageHelper.startPage(pageNum, pageSize, orderBy);
+
+        TradeExample example = new TradeExample();
+        example.createCriteria().andUserIdEqualTo(userId).andTradeStatusEqualTo(EXIST);
+        List<Trade> trades = tradeMapper.selectByExample(example);
+        Long num = tradeMapper.countByExample(example);
+        Map<String, Object> map = new HashMap<>();
+        map.put("tradeList", trades);
+        map.put("total", num);
+        return CommonResponse.Success(map);
+    }
+
+    @Override
+    public CommonResult delTrade(TradeItemDTO tradeItemDTO) {
+        TradeExample example = new TradeExample();
+        example.createCriteria()
+                .andIdEqualTo(tradeItemDTO.getId())
+                .andUserIdEqualTo(tradeItemDTO.getUserId());
+
+        tradeItemDTO.setTradeStatus(DELETED);
+        int res = tradeMapper.updateByExampleSelective(tradeItemDTO, example);
+        if(res >0) return CommonResponse.Success("删除成功","");
+        return CommonResponse.Fail("删除失败");
+    }
+
     public void addToTrade(DrugTradeDTO drugTradeDTO) {
         Trade trade = new Trade();
         trade.setUserId(drugTradeDTO.getUserId());
         trade.setTradeNo(drugTradeDTO.getOutTradeNo());
         trade.setTotalAmout(drugTradeDTO.getTotalAmount());
-        trade.setTradeStatus(1);   // 设置为0是逻辑删除
+        trade.setTradeStatus(EXIST);   // 设置为0是逻辑删除
         trade.setTradeInfo(JSON.toJSONString(drugTradeDTO.getDrugList()));
         trade.setTradeDate(drugTradeDTO.getTradeDate());
         tradeMapper.insert(trade);

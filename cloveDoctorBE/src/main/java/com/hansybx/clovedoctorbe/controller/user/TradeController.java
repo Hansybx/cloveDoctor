@@ -2,6 +2,7 @@ package com.hansybx.clovedoctorbe.controller.user;
 
 import com.alipay.api.AlipayApiException;
 import com.hansybx.clovedoctorbe.DTO.DrugTradeDTO;
+import com.hansybx.clovedoctorbe.DTO.TradeItemDTO;
 import com.hansybx.clovedoctorbe.common.CommonResult;
 import com.hansybx.clovedoctorbe.service.user.TradeService;
 import org.springframework.web.bind.annotation.*;
@@ -18,5 +19,15 @@ public class TradeController {
     @PostMapping("/trade")
     public CommonResult trade(@RequestBody DrugTradeDTO drugTradeDTO) throws AlipayApiException {
         return tradeService.Trade(drugTradeDTO);
+    }
+
+    @GetMapping("/trade")
+    public CommonResult getTradeList(@RequestParam Integer userId, @RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+        return tradeService.getTradeList(userId, pageNum, pageSize);
+    }
+
+    @PostMapping("/trade/del")
+    public CommonResult tradeDel(@RequestBody TradeItemDTO tradeItemDTO) {
+        return tradeService.delTrade(tradeItemDTO);
     }
 }
