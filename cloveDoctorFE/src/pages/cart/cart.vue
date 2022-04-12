@@ -8,7 +8,7 @@
                 :total="state.totalNum"
                 :page-size="state.pageSize"
                 :current-page="state.currentPage"
-                @current-change="changeDrugPage"
+                @current-change="changePage"
                 hide-on-single-page
             />
             <el-card
@@ -92,7 +92,7 @@ onMounted(() => {
 })
 
 
-const changeDrugPage = (val: number) => {
+const changePage = (val: number) => {
     state.currentPage = val;
     getCartList();
 }

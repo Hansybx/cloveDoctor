@@ -35,7 +35,7 @@
             :total="state.totalNum"
             :page-size="state.pageSize"
             :current-page="state.currentPage"
-            @current-change="changeDrugPage"
+            @current-change="changePage"
             hide-on-single-page
         />
     </el-card>
@@ -103,7 +103,7 @@ const showInfo = (row: OrderAdmin) => {
     state.dlgVisible = true
 }
 
-const changeDrugPage = (val: number) => {
+const changePage = (val: number) => {
     state.currentPage = val;
     let flag = state.keyword.trim();
     if (flag.length > 0) {

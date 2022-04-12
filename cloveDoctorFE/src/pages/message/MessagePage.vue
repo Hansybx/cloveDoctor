@@ -15,7 +15,7 @@
                     :total="state.totalNum"
                     :page-size="state.pageSize"
                     :current-page="state.currentPage"
-                    @current-change="changeDrugPage"
+                    @current-change="changePage"
                     hide-on-single-page
                 />
             </el-card>
@@ -75,7 +75,7 @@ const closeDlg = () => {
     state.dlgVisible = false
 }
 
-const changeDrugPage = (val: number) => {
+const changePage = (val: number) => {
     state.currentPage = val;
     getPageList()
 }
