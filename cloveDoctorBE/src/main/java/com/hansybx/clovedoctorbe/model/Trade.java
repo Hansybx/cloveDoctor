@@ -11,9 +11,11 @@ public class Trade {
 
     private String tradeNo;
 
-    private String tradeStatus;
+    private Integer tradeStatus;
 
     private String tradeInfo;
+
+    private String tradeDate;
 
     public Integer getId() {
         return id;
@@ -47,12 +49,12 @@ public class Trade {
         this.tradeNo = tradeNo == null ? null : tradeNo.trim();
     }
 
-    public String getTradeStatus() {
+    public Integer getTradeStatus() {
         return tradeStatus;
     }
 
-    public void setTradeStatus(String tradeStatus) {
-        this.tradeStatus = tradeStatus == null ? null : tradeStatus.trim();
+    public void setTradeStatus(Integer tradeStatus) {
+        this.tradeStatus = tradeStatus;
     }
 
     public String getTradeInfo() {
@@ -61,5 +63,13 @@ public class Trade {
 
     public void setTradeInfo(String tradeInfo) {
         this.tradeInfo = tradeInfo == null ? null : tradeInfo.trim();
+    }
+
+    public String getTradeDate() {
+        return tradeDate;
+    }
+
+    public void setTradeDate(String tradeDate) {
+        this.tradeDate = tradeDate == null ? null : tradeDate.trim();
     }
 }

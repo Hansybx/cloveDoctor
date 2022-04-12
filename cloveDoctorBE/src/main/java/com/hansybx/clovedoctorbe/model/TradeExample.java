@@ -365,62 +365,52 @@ public class TradeExample {
             return (Criteria) this;
         }
 
-        public Criteria andTradeStatusEqualTo(String value) {
+        public Criteria andTradeStatusEqualTo(Integer value) {
             addCriterion("tradeStatus =", value, "tradeStatus");
             return (Criteria) this;
         }
 
-        public Criteria andTradeStatusNotEqualTo(String value) {
+        public Criteria andTradeStatusNotEqualTo(Integer value) {
             addCriterion("tradeStatus <>", value, "tradeStatus");
             return (Criteria) this;
         }
 
-        public Criteria andTradeStatusGreaterThan(String value) {
+        public Criteria andTradeStatusGreaterThan(Integer value) {
             addCriterion("tradeStatus >", value, "tradeStatus");
             return (Criteria) this;
         }
 
-        public Criteria andTradeStatusGreaterThanOrEqualTo(String value) {
+        public Criteria andTradeStatusGreaterThanOrEqualTo(Integer value) {
             addCriterion("tradeStatus >=", value, "tradeStatus");
             return (Criteria) this;
         }
 
-        public Criteria andTradeStatusLessThan(String value) {
+        public Criteria andTradeStatusLessThan(Integer value) {
             addCriterion("tradeStatus <", value, "tradeStatus");
             return (Criteria) this;
         }
 
-        public Criteria andTradeStatusLessThanOrEqualTo(String value) {
+        public Criteria andTradeStatusLessThanOrEqualTo(Integer value) {
             addCriterion("tradeStatus <=", value, "tradeStatus");
             return (Criteria) this;
         }
 
-        public Criteria andTradeStatusLike(String value) {
-            addCriterion("tradeStatus like", value, "tradeStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andTradeStatusNotLike(String value) {
-            addCriterion("tradeStatus not like", value, "tradeStatus");
-            return (Criteria) this;
-        }
-
-        public Criteria andTradeStatusIn(List<String> values) {
+        public Criteria andTradeStatusIn(List<Integer> values) {
             addCriterion("tradeStatus in", values, "tradeStatus");
             return (Criteria) this;
         }
 
-        public Criteria andTradeStatusNotIn(List<String> values) {
+        public Criteria andTradeStatusNotIn(List<Integer> values) {
             addCriterion("tradeStatus not in", values, "tradeStatus");
             return (Criteria) this;
         }
 
-        public Criteria andTradeStatusBetween(String value1, String value2) {
+        public Criteria andTradeStatusBetween(Integer value1, Integer value2) {
             addCriterion("tradeStatus between", value1, value2, "tradeStatus");
             return (Criteria) this;
         }
 
-        public Criteria andTradeStatusNotBetween(String value1, String value2) {
+        public Criteria andTradeStatusNotBetween(Integer value1, Integer value2) {
             addCriterion("tradeStatus not between", value1, value2, "tradeStatus");
             return (Criteria) this;
         }
@@ -492,6 +482,76 @@ public class TradeExample {
 
         public Criteria andTradeInfoNotBetween(String value1, String value2) {
             addCriterion("tradeInfo not between", value1, value2, "tradeInfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andTradeDateIsNull() {
+            addCriterion("tradeDate is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTradeDateIsNotNull() {
+            addCriterion("tradeDate is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTradeDateEqualTo(String value) {
+            addCriterion("tradeDate =", value, "tradeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTradeDateNotEqualTo(String value) {
+            addCriterion("tradeDate <>", value, "tradeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTradeDateGreaterThan(String value) {
+            addCriterion("tradeDate >", value, "tradeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTradeDateGreaterThanOrEqualTo(String value) {
+            addCriterion("tradeDate >=", value, "tradeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTradeDateLessThan(String value) {
+            addCriterion("tradeDate <", value, "tradeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTradeDateLessThanOrEqualTo(String value) {
+            addCriterion("tradeDate <=", value, "tradeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTradeDateLike(String value) {
+            addCriterion("tradeDate like", value, "tradeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTradeDateNotLike(String value) {
+            addCriterion("tradeDate not like", value, "tradeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTradeDateIn(List<String> values) {
+            addCriterion("tradeDate in", values, "tradeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTradeDateNotIn(List<String> values) {
+            addCriterion("tradeDate not in", values, "tradeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTradeDateBetween(String value1, String value2) {
+            addCriterion("tradeDate between", value1, value2, "tradeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTradeDateNotBetween(String value1, String value2) {
+            addCriterion("tradeDate not between", value1, value2, "tradeDate");
             return (Criteria) this;
         }
     }

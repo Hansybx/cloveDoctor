@@ -76,8 +76,9 @@ public class TradeServiceImpl implements TradeService {
         trade.setUserId(drugTradeDTO.getUserId());
         trade.setTradeNo(drugTradeDTO.getOutTradeNo());
         trade.setTotalAmout(drugTradeDTO.getTotalAmount());
-        trade.setTradeStatus("Success");
+        trade.setTradeStatus(1);   // 设置为0是逻辑删除
         trade.setTradeInfo(JSON.toJSONString(drugTradeDTO.getDrugList()));
+        trade.setTradeDate(drugTradeDTO.getTradeDate());
         tradeMapper.insert(trade);
     }
 

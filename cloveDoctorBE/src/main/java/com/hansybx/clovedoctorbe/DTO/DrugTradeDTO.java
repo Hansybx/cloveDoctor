@@ -12,4 +12,5 @@ public class DrugTradeDTO {
     private Integer userId;
     private DrugTradeListDTO[] drugList;
     private String returnUrl;
+    private String tradeDate;
 }

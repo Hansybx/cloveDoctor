@@ -6,8 +6,9 @@
     <result column="userId" jdbcType="INTEGER" property="userId" />
     <result column="totalAmout" jdbcType="DECIMAL" property="totalAmout" />
     <result column="tradeNo" jdbcType="VARCHAR" property="tradeNo" />
-    <result column="tradeStatus" jdbcType="VARCHAR" property="tradeStatus" />
+    <result column="tradeStatus" jdbcType="INTEGER" property="tradeStatus" />
     <result column="tradeInfo" jdbcType="VARCHAR" property="tradeInfo" />
+    <result column="tradeDate" jdbcType="VARCHAR" property="tradeDate" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, userId, totalAmout, tradeNo, tradeStatus, tradeInfo
+    id, userId, totalAmout, tradeNo, tradeStatus, tradeInfo, tradeDate
   </sql>
   <select id="selectByExample" parameterType="com.hansybx.clovedoctorbe.model.TradeExample" resultMap="BaseResultMap">
     select
@@ -102,11 +103,11 @@
   </delete>
   <insert id="insert" parameterType="com.hansybx.clovedoctorbe.model.Trade">
     insert into trade (id, userId, totalAmout, 
-      tradeNo, tradeStatus, tradeInfo
-      )
+      tradeNo, tradeStatus, tradeInfo, 
+      tradeDate)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{totalAmout,jdbcType=DECIMAL}, 
-      #{tradeNo,jdbcType=VARCHAR}, #{tradeStatus,jdbcType=VARCHAR}, #{tradeInfo,jdbcType=VARCHAR}
-      )
+      #{tradeNo,jdbcType=VARCHAR}, #{tradeStatus,jdbcType=INTEGER}, #{tradeInfo,jdbcType=VARCHAR}, 
+      #{tradeDate,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.hansybx.clovedoctorbe.model.Trade">
     insert into trade
@@ -129,6 +130,9 @@
       <if test="tradeInfo != null">
         tradeInfo,
       </if>
+      <if test="tradeDate != null">
+        tradeDate,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -144,10 +148,13 @@
         #{tradeNo,jdbcType=VARCHAR},
       </if>
       <if test="tradeStatus != null">
-        #{tradeStatus,jdbcType=VARCHAR},
+        #{tradeStatus,jdbcType=INTEGER},
       </if>
       <if test="tradeInfo != null">
         #{tradeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeDate != null">
+        #{tradeDate,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -173,10 +180,13 @@
         tradeNo = #{record.tradeNo,jdbcType=VARCHAR},
       </if>
       <if test="record.tradeStatus != null">
-        tradeStatus = #{record.tradeStatus,jdbcType=VARCHAR},
+        tradeStatus = #{record.tradeStatus,jdbcType=INTEGER},
       </if>
       <if test="record.tradeInfo != null">
         tradeInfo = #{record.tradeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradeDate != null">
+        tradeDate = #{record.tradeDate,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -189,8 +199,9 @@
       userId = #{record.userId,jdbcType=INTEGER},
       totalAmout = #{record.totalAmout,jdbcType=DECIMAL},
       tradeNo = #{record.tradeNo,jdbcType=VARCHAR},
-      tradeStatus = #{record.tradeStatus,jdbcType=VARCHAR},
-      tradeInfo = #{record.tradeInfo,jdbcType=VARCHAR}
+      tradeStatus = #{record.tradeStatus,jdbcType=INTEGER},
+      tradeInfo = #{record.tradeInfo,jdbcType=VARCHAR},
+      tradeDate = #{record.tradeDate,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -208,10 +219,13 @@
         tradeNo = #{tradeNo,jdbcType=VARCHAR},
       </if>
       <if test="tradeStatus != null">
-        tradeStatus = #{tradeStatus,jdbcType=VARCHAR},
+        tradeStatus = #{tradeStatus,jdbcType=INTEGER},
       </if>
       <if test="tradeInfo != null">
         tradeInfo = #{tradeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeDate != null">
+        tradeDate = #{tradeDate,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -221,8 +235,9 @@
     set userId = #{userId,jdbcType=INTEGER},
       totalAmout = #{totalAmout,jdbcType=DECIMAL},
       tradeNo = #{tradeNo,jdbcType=VARCHAR},
-      tradeStatus = #{tradeStatus,jdbcType=VARCHAR},
-      tradeInfo = #{tradeInfo,jdbcType=VARCHAR}
+      tradeStatus = #{tradeStatus,jdbcType=INTEGER},
+      tradeInfo = #{tradeInfo,jdbcType=VARCHAR},
+      tradeDate = #{tradeDate,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
