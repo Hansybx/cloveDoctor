@@ -31,6 +31,10 @@ const routes = [
             {
                 path: '/drug/:id',
                 component: () => import("../pages/drug/drug.vue"),
+            },
+            {
+                path: '/user/order',
+                component: () => import("../pages/tradeInfo/TradeInfo.vue"),
             }
         ]
     },
