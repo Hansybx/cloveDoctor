@@ -4,7 +4,8 @@ export default interface drugTrade {
     subject: string
     userId: number
     drugList: drugTradeItem[]
-    returnUrl:string
+    returnUrl: string
+    tradeDate: string
 }
 
 interface drugTradeItem {

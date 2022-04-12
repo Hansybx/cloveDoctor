@@ -83,6 +83,7 @@ import moment from 'moment'
 import { ElMessage } from 'element-plus';
 import { v4 as uuidv4 } from 'uuid';
 import drugTrade from '../drug/DrugTrade';
+import CommonUtils from '../../common/commonUtils';
 
 const user = useUserStore()
 const state = reactive({
@@ -170,7 +171,7 @@ const getHTML = () => {
         subject: 'xxxxx',
         userId: user.userId,
         drugList: state.purchaseList,
-        
+        tradeDate: CommonUtils.dateFormat(new Date()),
         returnUrl: 'http://localhost:3000/#/cart'
     }
     

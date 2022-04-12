@@ -57,6 +57,7 @@ import router from '../../router/router';
 import { ElMessage } from 'element-plus';
 import { v4 as uuidv4 } from 'uuid';
 import drugTrade from './DrugTrade';
+import CommonUtils from '../../common/commonUtils';
 
 
 const route = useRoute()
@@ -127,7 +128,8 @@ const getHTML = () => {
         totalAmount: drugInfo.price * drugInfo.num,
         subject: drugInfo.drugName,
         userId: user.userId,
-        returnUrl:'http://localhost:3000/#/shopping',
+        returnUrl: 'http://localhost:3000/#/shopping',
+        tradeDate: CommonUtils.dateFormat(new Date()),
         drugList: [
             {
                 drugId: Number(route.params.id),

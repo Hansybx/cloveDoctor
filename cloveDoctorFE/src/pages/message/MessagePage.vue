@@ -112,7 +112,7 @@ const getPageList = () => {
 }
 </script>
 
-<style>
+<style scoped>
 .space-box {
     height: 50px;
 }
