@@ -59,17 +59,6 @@
                 </el-row>
             </el-card>
         </el-affix>
-        <!-- <iframe
-            v-if="state.payHTML.length > 0"
-            :srcdoc="state.payHTML"
-            frameborder="no"
-            marginwidth="0"
-            marginheight="0"
-            scrolling="no"
-            width="900"
-            height="900"
-            style="overflow:hidden;"
-        ></iframe> -->
     </div>
 </template>
 
@@ -174,7 +163,7 @@ const getHTML = () => {
         tradeDate: CommonUtils.dateFormat(new Date()),
         returnUrl: 'http://localhost:3000/#/cart'
     }
-    
+
     axios.post(Constant.BASE_URL_USER + '/trade', param).then(res => {
         if (res.data.code === 200) {
             state.payHTML = res.data.data.body

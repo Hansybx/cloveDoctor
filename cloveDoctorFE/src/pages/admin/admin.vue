@@ -1,5 +1,9 @@
 <template>
-    <div class="title">茯苓药店管理系统</div>
+    <div class="title-container">
+        <div class="title">茯苓药店管理系统</div>
+        <el-button class="text-btn" type="text" @click="toHome">返回商城</el-button>
+    </div>
+
     <el-container>
         <el-aside width="200px">
             <AdminSidebar />
@@ -11,11 +15,21 @@
 </template>
 
 <script setup lang='ts'>
+import router from '../../router/router';
 import AdminSidebar from './adminSidebar.vue';
 
+const toHome = () => {
+    router.push('/')
+}
 </script>
 
-<style>
+<style scoped>
+.title-container {
+    display: flex;
+    background-color: #409eff;
+    justify-content: space-around;
+    align-items: center;
+}
 .title {
     font-size: 20px;
     min-height: 10vh;
@@ -24,6 +38,10 @@ import AdminSidebar from './adminSidebar.vue';
     text-align: left;
     letter-spacing: 8px;
     color: #fff;
-    background-color: #409eff;
+}
+
+.text-btn {
+    font-size: 20px;
+    color: #fff;
 }
 </style>
