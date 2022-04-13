@@ -10,7 +10,8 @@ public interface TradeExtMapper {
     @Select("SELECT trade.*, `user`.username\n" +
             "FROM `user`\n" +
             "RIGHT JOIN trade\n" +
-            "on trade.userId = `user`.id ")
+            "on trade.userId = `user`.id \n" +
+            "WHERE `user`.username IS NOT NULL")
     List<TradeAdminDTO> getTradeList();
 
     @Select("SELECT trade.*, `user`.username\n" +
