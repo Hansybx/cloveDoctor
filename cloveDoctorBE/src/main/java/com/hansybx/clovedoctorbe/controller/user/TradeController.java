@@ -3,6 +3,8 @@ package com.hansybx.clovedoctorbe.controller.user;
 import com.alipay.api.AlipayApiException;
 import com.hansybx.clovedoctorbe.DTO.DrugTradeDTO;
 import com.hansybx.clovedoctorbe.DTO.TradeItemDTO;
+import com.hansybx.clovedoctorbe.Exception.StockNotFullException;
+import com.hansybx.clovedoctorbe.common.CommonResponse;
 import com.hansybx.clovedoctorbe.common.CommonResult;
 import com.hansybx.clovedoctorbe.service.user.TradeService;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +19,12 @@ public class TradeController {
     TradeService tradeService;
 
     @PostMapping("/trade")
-    public CommonResult trade(@RequestBody DrugTradeDTO drugTradeDTO) throws AlipayApiException {
-        return tradeService.Trade(drugTradeDTO);
+    public CommonResult trade(@RequestBody DrugTradeDTO drugTradeDTO) throws AlipayApiException, StockNotFullException {
+        try{
+            return tradeService.Trade(drugTradeDTO);
+        }catch (StockNotFullException e){
+            return CommonResponse.Fail(e.getMessage());
+        }
     }
 
     @GetMapping("/trade")

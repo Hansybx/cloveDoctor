@@ -373,6 +373,76 @@ public class UserExample {
             addCriterion("type not between", value1, value2, "type");
             return (Criteria) this;
         }
+
+        public Criteria andRegisterDateIsNull() {
+            addCriterion("registerDate is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterDateIsNotNull() {
+            addCriterion("registerDate is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterDateEqualTo(String value) {
+            addCriterion("registerDate =", value, "registerDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterDateNotEqualTo(String value) {
+            addCriterion("registerDate <>", value, "registerDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterDateGreaterThan(String value) {
+            addCriterion("registerDate >", value, "registerDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterDateGreaterThanOrEqualTo(String value) {
+            addCriterion("registerDate >=", value, "registerDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterDateLessThan(String value) {
+            addCriterion("registerDate <", value, "registerDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterDateLessThanOrEqualTo(String value) {
+            addCriterion("registerDate <=", value, "registerDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterDateLike(String value) {
+            addCriterion("registerDate like", value, "registerDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterDateNotLike(String value) {
+            addCriterion("registerDate not like", value, "registerDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterDateIn(List<String> values) {
+            addCriterion("registerDate in", values, "registerDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterDateNotIn(List<String> values) {
+            addCriterion("registerDate not in", values, "registerDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterDateBetween(String value1, String value2) {
+            addCriterion("registerDate between", value1, value2, "registerDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterDateNotBetween(String value1, String value2) {
+            addCriterion("registerDate not between", value1, value2, "registerDate");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

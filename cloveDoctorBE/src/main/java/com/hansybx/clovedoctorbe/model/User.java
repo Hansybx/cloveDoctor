@@ -9,6 +9,8 @@ public class User {
 
     private String type;
 
+    private String registerDate;
+
     public Integer getId() {
         return id;
     }
@@ -39,5 +41,13 @@ public class User {
 
     public void setType(String type) {
         this.type = type == null ? null : type.trim();
+    }
+
+    public String getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(String registerDate) {
+        this.registerDate = registerDate == null ? null : registerDate.trim();
     }
 }

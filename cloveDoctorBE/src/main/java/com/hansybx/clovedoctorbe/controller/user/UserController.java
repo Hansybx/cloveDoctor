@@ -62,7 +62,13 @@ public class UserController {
     @PostMapping("/register")
     public CommonResult register(@RequestBody UserDTO userDTO) {
         if (userDTO.getCaptcha().equals(lineCaptcha.getCode())) {
-            return userService.register(userDTO);
+            try {
+                return userService.register(userDTO);
+            } catch (Exception e) {
+                System.out.println(e);
+                return CommonResponse.Fail("注册失败，用户名已注册");
+            }
+
         }
         return CommonResponse.Fail("验证码不正确！");
     }

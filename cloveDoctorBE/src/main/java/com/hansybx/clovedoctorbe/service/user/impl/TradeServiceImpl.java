@@ -12,6 +12,7 @@ import com.github.pagehelper.PageHelper;
 import com.hansybx.clovedoctorbe.DTO.DrugTradeDTO;
 import com.hansybx.clovedoctorbe.DTO.DrugTradeListDTO;
 import com.hansybx.clovedoctorbe.DTO.TradeItemDTO;
+import com.hansybx.clovedoctorbe.Exception.StockNotFullException;
 import com.hansybx.clovedoctorbe.common.CommonResponse;
 import com.hansybx.clovedoctorbe.common.CommonResult;
 import com.hansybx.clovedoctorbe.mapper.DrugsMapper;
@@ -56,7 +57,7 @@ public class TradeServiceImpl implements TradeService {
     }
 
     @Override
-    public CommonResult Trade(DrugTradeDTO drugTradeDTO) throws AlipayApiException {
+    public CommonResult Trade(DrugTradeDTO drugTradeDTO) throws AlipayApiException, StockNotFullException {
         AlipayClient alipayClient = new DefaultAlipayClient(alipayConfig());
 
         AlipayTradePagePayModel model = new AlipayTradePagePayModel();
@@ -71,8 +72,8 @@ public class TradeServiceImpl implements TradeService {
         request.setBizModel(model);
         AlipayTradePagePayResponse response = alipayClient.pageExecute(request);
         if (response.isSuccess()) {
-            addToTrade(drugTradeDTO);
             drugStockChange(drugTradeDTO.getDrugList());
+            addToTrade(drugTradeDTO);
             return CommonResponse.Success(response);
         }
 
@@ -118,7 +119,7 @@ public class TradeServiceImpl implements TradeService {
         tradeMapper.insert(trade);
     }
 
-    public void drugStockChange(DrugTradeListDTO[] drugList) {
+    public void drugStockChange(DrugTradeListDTO[] drugList) throws StockNotFullException {
         for (DrugTradeListDTO drugItem : drugList) {
             DrugsExample drugsExample = new DrugsExample();
             drugsExample.createCriteria()
@@ -127,6 +128,8 @@ public class TradeServiceImpl implements TradeService {
             Drugs drug = drugsMapper.selectByPrimaryKey(drugItem.getDrugId());
             int curNum = drug.getStock() - drugItem.getDrugNum();
             drug.setStock(curNum);
+            drug.setSold(drugItem.getDrugNum()+drug.getSold());
+            if(curNum<0) throw new StockNotFullException(drugItem.getDrugName()+"购买数量超出库存");
             if (curNum == 0) drug.setStatus(0);
             drugsMapper.updateByExample(drug, drugsExample);
         }

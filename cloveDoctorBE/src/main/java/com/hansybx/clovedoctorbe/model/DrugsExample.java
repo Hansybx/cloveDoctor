@@ -553,6 +553,66 @@ public class DrugsExample {
             addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }
+
+        public Criteria andSoldIsNull() {
+            addCriterion("sold is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoldIsNotNull() {
+            addCriterion("sold is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoldEqualTo(Integer value) {
+            addCriterion("sold =", value, "sold");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoldNotEqualTo(Integer value) {
+            addCriterion("sold <>", value, "sold");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoldGreaterThan(Integer value) {
+            addCriterion("sold >", value, "sold");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoldGreaterThanOrEqualTo(Integer value) {
+            addCriterion("sold >=", value, "sold");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoldLessThan(Integer value) {
+            addCriterion("sold <", value, "sold");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoldLessThanOrEqualTo(Integer value) {
+            addCriterion("sold <=", value, "sold");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoldIn(List<Integer> values) {
+            addCriterion("sold in", values, "sold");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoldNotIn(List<Integer> values) {
+            addCriterion("sold not in", values, "sold");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoldBetween(Integer value1, Integer value2) {
+            addCriterion("sold between", value1, value2, "sold");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoldNotBetween(Integer value1, Integer value2) {
+            addCriterion("sold not between", value1, value2, "sold");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

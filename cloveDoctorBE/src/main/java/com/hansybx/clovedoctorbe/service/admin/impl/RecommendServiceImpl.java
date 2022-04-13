@@ -42,7 +42,8 @@ public class RecommendServiceImpl implements RecommendService {
 
     @Override
     public CommonResult getRecommendDrugs(Integer pageNum, Integer pageSize) {
-        List<RecommendDrugsDTO> recommendDrugsDTOS = recommendDrugsExtMapper.selectAll(pageNum - 1, pageSize);
+        PageHelper.startPage(pageNum, pageSize);
+        List<RecommendDrugsDTO> recommendDrugsDTOS = recommendDrugsExtMapper.selectAll();
         if (recommendDrugsDTOS.size() > 0) {
             Map<String, Object> map = new HashMap<>();
             map.put("recommendList", recommendDrugsDTOS);

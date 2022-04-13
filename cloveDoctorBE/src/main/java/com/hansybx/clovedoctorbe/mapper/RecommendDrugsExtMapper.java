@@ -27,10 +27,9 @@ public interface RecommendDrugsExtMapper {
     @Select("SELECT recommenddrugs.* , drugs.drugImg, drugs.drugName\n" +
             "FROM drugs\n" +
             "LEFT JOIN recommenddrugs ON recommenddrugs.drugId = drugs.id\n" +
-            "WHERE recommenddrugs.drugId = drugs.id AND drugs.`status` = 1" +
-            "ORDER BY recommenddrugs.id DESC\n" +
-            "LIMIT #{pageNum} , #{pageSize}")
-    List<RecommendDrugsDTO> selectAll(@Param("pageNum")Integer pageNum,@Param("pageSize")Integer pageSize);
+            "WHERE recommenddrugs.drugId = drugs.id AND drugs.`status` = 1 " +
+            "ORDER BY recommenddrugs.addDate DESC")
+    List<RecommendDrugsDTO> selectAll();
 
     @Select("SELECT  drugs.drugImg, drugs.drugName, drugs.id, drugs.price\n" +
             "FROM drugs\n" +

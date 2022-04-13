@@ -15,6 +15,8 @@ public class Drugs {
 
     private Integer status;
 
+    private Integer sold;
+
     public Integer getId() {
         return id;
     }
@@ -69,5 +71,13 @@ public class Drugs {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getSold() {
+        return sold;
+    }
+
+    public void setSold(Integer sold) {
+        this.sold = sold;
     }
 }
