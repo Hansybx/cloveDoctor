@@ -81,6 +81,7 @@ import axios from 'axios'
 import Constant from '../../common/config';
 import router from '../../router/router';
 import { useUserStore } from '../../stores/UserInfo';
+import CommonUtils from '../../common/commonUtils';
 
 // mounted
 onMounted(() => {
@@ -96,6 +97,7 @@ const capthcaRefresh = () => {
 const isLogin = ref(true);
 const toRegister = () => {
     isLogin.value = false;
+    loginForm.registerDate = CommonUtils.dateFormat(new Date());
 }
 
 const toLogin = () => {
@@ -108,6 +110,7 @@ const loginForm = reactive({
     password: "",
     passwordRepeat: "",
     captcha: "",
+    registerDate: ""
 })
 const ruleFormRef = ref<FormInstance>();
 let validateRepeatPwd = (rule: any, value: string, callback: any) => {
