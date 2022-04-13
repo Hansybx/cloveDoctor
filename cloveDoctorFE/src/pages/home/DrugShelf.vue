@@ -66,6 +66,8 @@ const getRecommend = () => {
     axios.get(Constant.BASE_URL + '/recommend').then(res => {
         if (res.data.code === 200) {
             local.recommendList = res.data.data;
+            let maxLength = 8
+            if (local.recommendList.length > maxLength) local.recommendList.length = maxLength
             console.log(local.recommendList)
         }
     })
@@ -86,7 +88,7 @@ const toDrugItem = (id: number) => {
     width: 18vw;
 }
 
-.main-container{
+.main-container {
     display: flex;
 }
 
