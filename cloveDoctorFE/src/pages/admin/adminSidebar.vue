@@ -2,7 +2,7 @@
     <el-menu :router="true" class="menu-container" @open="handleOpen" @close="handleClose">
         <el-menu-item index="/admin/charts">
             <el-icon>
-                <icon-menu />
+                <histogram />
             </el-icon>
             <span>数据统计</span>
         </el-menu-item>
@@ -20,13 +20,13 @@
         </el-sub-menu>
         <el-menu-item index="/admin/drugs">
             <el-icon>
-                <icon-menu />
+                <first-aid-kit />
             </el-icon>
             <span>药品管理</span>
         </el-menu-item>
         <el-menu-item index="/admin/user">
             <el-icon>
-                <setting />
+                <user />
             </el-icon>
             <template #title>用户管理</template>
         </el-menu-item>
@@ -43,6 +43,9 @@
 import {
     Menu as IconMenu,
     Setting,
+    Histogram,
+    FirstAidKit,
+    User,
 } from '@element-plus/icons-vue'
 const handleOpen = (key: string, keyPath: string[]) => {
     console.log(key, keyPath)
