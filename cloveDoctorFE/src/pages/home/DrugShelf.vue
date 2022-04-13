@@ -8,7 +8,7 @@
                 <el-image :src="drugKindImg" fit="contain" :style="handleKindImg()" />
             </el-card>
         </el-aside>
-        <el-main>
+        <el-main class="main-container">
             <el-space :size="0" wrap>
                 <el-card
                     v-for="item in local.recommendList"
@@ -27,7 +27,7 @@
 
 <script setup lang='ts'>
 import axios from 'axios';
-import { reactive, onMounted, ref, onBeforeMount, Ref } from 'vue';
+import { reactive, onMounted, onBeforeMount } from 'vue';
 import Constant from '../../common/config';
 import router from '../../router/router';
 
@@ -40,7 +40,14 @@ onMounted(() => {
     handleKindHeight();
 })
 
-const local = reactive({ recommendList: [] })
+interface recommendItem {
+    id: number
+    drugImg: string
+    drugName: string
+    price: number
+}
+
+const local = reactive({ recommendList: [] as recommendItem[] })
 const handleKindHeight = () => {
     if (local.recommendList.length <= 4) {
         return { height: "200px" }
@@ -59,6 +66,7 @@ const getRecommend = () => {
     axios.get(Constant.BASE_URL + '/recommend').then(res => {
         if (res.data.code === 200) {
             local.recommendList = res.data.data;
+            console.log(local.recommendList)
         }
     })
 }
@@ -76,6 +84,10 @@ const toDrugItem = (id: number) => {
 
 .el-aside {
     width: 18vw;
+}
+
+.main-container{
+    display: flex;
 }
 
 .drugKind {
