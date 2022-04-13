@@ -50,7 +50,12 @@ const routes = [
         children: [
             {
                 path: '',
-                component: () => import("../pages/admin/swiper/swiper.vue"),
+                component: () => import("../pages/admin/charts/Charts.vue"),
+                meta: { isAdmin: true }
+            },
+            {
+                path: '/admin/charts',
+                component: () => import("../pages/admin/charts/Charts.vue"),
                 meta: { isAdmin: true }
             },
             {
@@ -90,7 +95,7 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
     const user = useUserStore();
-    
+
     if (to.meta.isLogin) {
         if (user.userId < 0) {
             router.push('/login')

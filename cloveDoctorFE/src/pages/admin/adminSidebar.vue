@@ -1,5 +1,11 @@
 <template>
     <el-menu :router="true" class="menu-container" @open="handleOpen" @close="handleClose">
+        <el-menu-item index="/admin/charts">
+            <el-icon>
+                <icon-menu />
+            </el-icon>
+            <span>数据统计</span>
+        </el-menu-item>
         <el-sub-menu index="/admin/main">
             <template #title>
                 <el-icon>
