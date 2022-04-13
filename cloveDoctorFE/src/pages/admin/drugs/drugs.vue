@@ -18,7 +18,7 @@
                     @keyup.enter="drugSearch()"
                 >搜索</el-button>
                 <el-button type="primary" :icon="CirclePlus" @click="addDrugs()">新增药品</el-button>
-                <el-button type="primary" :icon="CirclePlus" @click="handleDeleteMulti()">批量删除</el-button>
+                <el-button type="primary" :icon="Delete" @click="handleDeleteMulti()">批量删除</el-button>
             </div>
         </template>
         <el-table
@@ -82,7 +82,7 @@
 
 <script setup lang='ts'>
 import { reactive, ref, onMounted } from 'vue'
-import { Search, CirclePlus } from '@element-plus/icons-vue'
+import { Search, CirclePlus, Delete } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import AddDrugDlg from './addDrugDlg.vue';
 import axios from 'axios'

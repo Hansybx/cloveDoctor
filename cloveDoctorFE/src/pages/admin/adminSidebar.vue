@@ -32,7 +32,7 @@
         </el-menu-item>
         <el-menu-item index="/admin/orders">
             <el-icon>
-                <setting />
+                <tickets />
             </el-icon>
             <template #title>订单管理</template>
         </el-menu-item>
@@ -42,7 +42,7 @@
 <script setup lang='ts'>
 import {
     Menu as IconMenu,
-    Setting,
+    Tickets,
     Histogram,
     FirstAidKit,
     User,
