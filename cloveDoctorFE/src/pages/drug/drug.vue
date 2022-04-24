@@ -2,12 +2,7 @@
     <div class="row-container">
         <el-image :src="drugInfo.drugImg" class="img-container"></el-image>
         <el-card class="box-card">
-            <el-form
-                label-position="right"
-                label-width="100px"
-                :model="drugInfo"
-                style="max-width: 460px"
-            >
+            <el-form label-position="right" label-width="100px" :model="drugInfo" style="max-width: 460px">
                 <el-form-item label="名称">
                     <div>{{ drugInfo.drugName }}</div>
                 </el-form-item>
@@ -123,41 +118,46 @@ const addToCart = () => {
 }
 
 const getHTML = () => {
-    const param: drugTrade = {
-        outTradeNo: uuidv4(),
-        totalAmount: drugInfo.price * drugInfo.num,
-        subject: drugInfo.drugName,
-        userId: user.userId,
-        returnUrl: 'http://localhost:3000/#/shopping',
-        tradeDate: CommonUtils.dateFormat(new Date()),
-        drugList: [
-            {
-                drugId: Number(route.params.id),
-                drugName: drugInfo.drugName,
-                drugNum: drugInfo.num,
-                drugPrice: drugInfo.price * drugInfo.num,
-            }
-        ]
-    }
-    axios.post(Constant.BASE_URL_USER + '/trade', param).then(res => {
-        if (res.data.code === 200) {
-            drugInfo.payHTML = res.data.data.body
-            console.log(drugInfo.payHTML);
-            // nextTick(() => {
-            //     document.forms[0].submit()
-            // })
-            const div = document.createElement('div')
-            /* 下面的data.content就是后台返回接收到的数据 */
-            div.innerHTML = res.data.data.body
-            document.body.appendChild(div)
-            document.forms[1].submit()
-
-        } else if (res.data.code === 400) {
-            ElMessage.error(res.data.message)
-        } else {
-            ElMessage.error('糟糕,失败了！')
+    if (user.userId < 0) {
+        router.push('/login')
+    } else {
+        const param: drugTrade = {
+            outTradeNo: uuidv4(),
+            totalAmount: drugInfo.price * drugInfo.num,
+            subject: drugInfo.drugName,
+            userId: user.userId,
+            returnUrl: 'http://localhost:3000/#/shopping',
+            tradeDate: CommonUtils.dateFormat(new Date()),
+            drugList: [
+                {
+                    drugId: Number(route.params.id),
+                    drugName: drugInfo.drugName,
+                    drugNum: drugInfo.num,
+                    drugPrice: drugInfo.price * drugInfo.num,
+                }
+            ]
         }
-    })
+        axios.post(Constant.BASE_URL_USER + '/trade', param).then(res => {
+            if (res.data.code === 200) {
+                drugInfo.payHTML = res.data.data.body
+                console.log(drugInfo.payHTML);
+                // nextTick(() => {
+                //     document.forms[0].submit()
+                // })
+                const div = document.createElement('div')
+                /* 下面的data.content就是后台返回接收到的数据 */
+                div.innerHTML = res.data.data.body
+                document.body.appendChild(div)
+                document.forms[1].submit()
+
+            } else if (res.data.code === 400) {
+                ElMessage.error(res.data.message)
+            } else {
+                ElMessage.error('糟糕,失败了！')
+            }
+        })
+    }
+
 }
 
 </script>
@@ -167,6 +167,7 @@ const getHTML = () => {
     height: 400px;
     display: flex;
 }
+
 .img-container {
     width: 30vw;
 }
