@@ -4,6 +4,7 @@ import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.captcha.generator.RandomGenerator;
 import com.hansybx.clovedoctorbe.DTO.UserDTO;
+import com.hansybx.clovedoctorbe.Exception.UserLoginException;
 import com.hansybx.clovedoctorbe.common.CommonResponse;
 import com.hansybx.clovedoctorbe.common.CommonResult;
 import com.hansybx.clovedoctorbe.service.user.UserService;
@@ -52,11 +53,18 @@ public class UserController {
 
     @PostMapping("/login")
     public CommonResult login(@RequestBody UserDTO userDTO) {
-        if (userDTO.getCaptcha().equals(lineCaptcha.getCode())) {
-            return userService.login(userDTO);
+        try {
+            if (userDTO.getCaptcha().equals(lineCaptcha.getCode())) {
+                return userService.login(userDTO);
+            }
+            return CommonResponse.Fail("验证码不正确！");
+        }catch (UserLoginException e){
+            return CommonResponse.Fail(e.getMessage());
         }
+
+
 //        {code: 200, message: "登录成功", data: {id: 3, username: "123", password: "123456", type: "USER"}}
-        return CommonResponse.Fail("验证码不正确！");
+
     }
 
     @PostMapping("/register")

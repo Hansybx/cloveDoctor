@@ -1,6 +1,7 @@
 package com.hansybx.clovedoctorbe.service.user;
 
 import com.hansybx.clovedoctorbe.DTO.UserDTO;
+import com.hansybx.clovedoctorbe.Exception.UserLoginException;
 import com.hansybx.clovedoctorbe.common.CommonResponse;
 import com.hansybx.clovedoctorbe.common.CommonResult;
 import com.hansybx.clovedoctorbe.mapper.UserMapper;
@@ -33,7 +34,7 @@ public class UserService {
         return CommonResponse.Fail("注册失败");
     }
 
-    public CommonResult login(UserDTO userDTO) {
+    public CommonResult login(UserDTO userDTO) throws UserLoginException {
         UserExample userExample = new UserExample();
         userExample.createCriteria()
                 .andUsernameEqualTo(userDTO.getUsername())
@@ -41,7 +42,8 @@ public class UserService {
         List<User> userList= userMapper.selectByExample(userExample);
         if (userList.size() == 1) {
             return CommonResponse.Success("登录成功", userList.get(0));
+        }else{
+            throw new UserLoginException("账号或密码不正确");
         }
-        return CommonResponse.Fail("登录失败");
     }
 }
