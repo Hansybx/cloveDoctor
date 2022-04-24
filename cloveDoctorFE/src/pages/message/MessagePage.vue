@@ -8,25 +8,13 @@
                     </div>
                 </template>
                 <message-card-list @getPageList="getPageList"></message-card-list>
-                <el-pagination
-                    class="page-container"
-                    background
-                    layout="prev, pager, next"
-                    :total="state.totalNum"
-                    :page-size="state.pageSize"
-                    :current-page="state.currentPage"
-                    @current-change="changePage"
-                    hide-on-single-page
-                />
+                <el-pagination class="page-container" background layout="prev, pager, next" :total="state.totalNum"
+                    :page-size="state.pageSize" :current-page="state.currentPage" @current-change="changePage"
+                    hide-on-single-page />
             </el-card>
 
             <el-dialog v-model="state.dlgVisible" title="留下你的宝贵建议吧！" width="30%">
-                <el-input
-                    v-model="state.msgContent"
-                    :rows="3"
-                    type="textarea"
-                    placeholder="留言内容不能超过100个字"
-                />
+                <el-input v-model="state.msgContent" :rows="3" type="textarea" placeholder="留言内容不能超过100个字" />
                 <template #footer>
                     <span class="dialog-footer">
                         <el-button @click="closeDlg()">取消</el-button>
@@ -69,6 +57,13 @@ onMounted(() => {
 })
 
 const openDlg = () => {
+    if (user.userId < 0) {
+        ElMessage({
+            message: '请登录后使用',
+            type: 'info'
+        });
+        return;
+    }
     state.dlgVisible = true
 }
 const closeDlg = () => {
@@ -138,7 +133,8 @@ const getPageList = () => {
     height: 50px;
     width: 75px;
 }
-:deep() .el-tabs--border-card > .el-tabs__content {
+
+:deep() .el-tabs--border-card>.el-tabs__content {
     padding: 0;
 }
 </style>
