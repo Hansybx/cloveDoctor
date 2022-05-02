@@ -41,7 +41,7 @@ public class CartService {
 //    }
 
     public CommonResult addToCart(CartDTO cartDTO) {
-        // 更新时直接使用总数量， 如原先是1 想更新为2 cartDTO中的drugNum直接传入2
+        // 更新时直接使用数量累加， 如原先是1 想更新为3 cartDTO中的drugNum直接传入2
         CartExample cartExample = new CartExample();
         cartExample.createCriteria().andDrugIdEqualTo(cartDTO.getDrugId())
                 .andUserIdEqualTo(cartDTO.getUserId());

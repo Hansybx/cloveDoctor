@@ -41,6 +41,7 @@ public class DrugsService {
         drugs.setStatus(drugsDTO.getStatus());
         drugs.setStock(drugsDTO.getStock());
         drugs.setUpdateTime(drugsDTO.getUpdateTime());
+        drugs.setSold(0);
         int num = drugsMapper.insert(drugs);
         if (num > 0) {
             return CommonResponse.Success();
@@ -101,6 +102,8 @@ public class DrugsService {
     public CommonResult drugUpdate(Drugs drugsDTO) {
         DrugsExample drugsExample = new DrugsExample();
         drugsExample.createCriteria().andIdEqualTo(drugsDTO.getId());
+        Drugs drugs = drugsMapper.selectByPrimaryKey(drugsDTO.getId());
+        drugsDTO.setSold(drugs.getSold());
         if (drugsDTO.getStock() > 0) drugsDTO.setStatus(1);
         int res = drugsMapper.updateByExample(drugsDTO, drugsExample);
         if (res > 0) {

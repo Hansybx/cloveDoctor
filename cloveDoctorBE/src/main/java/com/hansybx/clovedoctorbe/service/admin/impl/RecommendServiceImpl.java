@@ -33,7 +33,8 @@ public class RecommendServiceImpl implements RecommendService {
             drugs.setAddDate(new Date());
             RecommendDrugsDTO example = recommendDrugsExtMapper.selectRecommondDrugByDrugId(recommendDrugsDTO.getId());
             if (example != null) {
-                return CommonResponse.Fail("该药品已添加");
+                continue;
+//                return CommonResponse.Fail("部分药品已添加成功，存在已添加药品");
             }
             recommendDrugsMapper.insert(drugs);
         }

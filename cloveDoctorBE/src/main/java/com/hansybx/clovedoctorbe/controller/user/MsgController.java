@@ -17,7 +17,7 @@ public class MsgController {
     MessageService messageService;
 
     @PostMapping("/create")
-    public CommonResult trade(@RequestBody MsgDTO msgDTO) {
+    public CommonResult create(@RequestBody MsgDTO msgDTO) {
         return messageService.MsgCreate(msgDTO);
     }
 
