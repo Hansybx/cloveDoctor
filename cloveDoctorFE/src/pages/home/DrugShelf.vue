@@ -1,5 +1,5 @@
 <template>
-    <el-container class="shelf-container">
+    <el-container v-if="local.recommendList.length > 0" class="shelf-container">
         <el-aside>
             <el-card shadow="hover" class="drugKind" :style="handleKindHeight()">
                 <div class="card-header">
@@ -10,12 +10,8 @@
         </el-aside>
         <el-main class="main-container">
             <el-space :size="0" wrap>
-                <el-card
-                    v-for="item in local.recommendList"
-                    shadow="hover"
-                    class="drugItem"
-                    @click="toDrugItem(item.id)"
-                >
+                <el-card v-for="item in local.recommendList" shadow="hover" class="drugItem"
+                    @click="toDrugItem(item.id)">
                     <el-image :src="item.drugImg" class="imageItem" />
                     <div>{{ item.drugName }}</div>
                     <div>￥{{ item.price }}</div>

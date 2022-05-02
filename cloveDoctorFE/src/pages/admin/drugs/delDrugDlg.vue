@@ -4,7 +4,7 @@
             <span>是否确定删除选中的药品？</span>
             <template #footer>
                 <span class="dialog-footer">
-                    <el-button @click="changeDelDlgVisible()">否</el-button>
+                    <el-button @click="dlgClose()">否</el-button>
                     <el-button type="primary" @click="delSubmit()">是</el-button>
                 </span>
             </template>

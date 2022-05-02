@@ -89,6 +89,7 @@ const addDrugs = () => {
 }
 const changePage = (val: number) => {
     state.currentPage = val;
+    getDrugs();
 }
 
 const handleDelete = (index: number, row: any) => {

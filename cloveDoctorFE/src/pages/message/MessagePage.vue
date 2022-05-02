@@ -84,6 +84,7 @@ const msgSend = () => {
     closeDlg()
     state.msgContent = ""
     msg.msgCreate(param)
+    getPageList()
 }
 const getMessageList = (msgType: string, pageNum: number, pageSize: number) => {
     axios.get(Constant.BASE_URL_USER + '/msg', {

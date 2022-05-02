@@ -1,5 +1,5 @@
 <template>
-    <el-dialog v-model="state.dlgVisible" title="新增药品">
+    <el-dialog v-model="state.dlgVisible" title="药品编辑">
         <el-form ref="dlgRef" :model="drugInfo" :rules="dlgRules">
             <el-form-item label="药品名称" prop="drugName" :label-width="formLabelWidth">
                 <el-input v-model="drugInfo.drugName" placeholder="输入药品名称" />
@@ -8,13 +8,8 @@
                 <el-input v-model="drugInfo.drugImg" placeholder="输入图片地址" />
             </el-form-item>
             <el-form-item label="药品保质期至" prop="updateTime" :label-width="formLabelWidth">
-                <el-date-picker
-                    v-model="drugInfo.updateTime"
-                    type="date"
-                    placeholder="选择药品有效期"
-                    format="YYYY/MM/DD"
-                    value-format="YYYY-MM-DD"
-                />
+                <el-date-picker v-model="drugInfo.updateTime" type="date" placeholder="选择药品有效期" format="YYYY/MM/DD"
+                    value-format="YYYY-MM-DD" />
             </el-form-item>
             <el-form-item label="药品价格￥" prop="price" :label-width="formLabelWidth">
                 <el-input-number v-model="drugInfo.price" :precision="2" :step="0.1" />
@@ -97,6 +92,12 @@ const dlgOpen = (isEditflag: boolean, params: drugs) => {
         drugInfo.status = params.status;
         drugInfo.stock = params.stock;
         drugInfo.updateTime = params.updateTime;
+    } else {
+        drugInfo.drugName = "";
+        drugInfo.drugImg = "";
+        drugInfo.price = 0;
+        drugInfo.stock = 0;
+        drugInfo.updateTime = "";
     }
 }
 

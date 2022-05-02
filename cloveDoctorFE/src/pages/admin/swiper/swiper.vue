@@ -184,7 +184,7 @@ const addSwiper = async (formEl: FormInstance | undefined) => {
                 }
             })
         } else {
-            ElMessage.error('糟糕，添加失败了！')
+            ElMessage.error('添加数据不符合要求！')
         }
     })
     swiperDialogVisible.value = false;
@@ -254,7 +254,7 @@ const swiperEditDlgConfirm = async (formEl: FormInstance | undefined) => {
                 }
             })
         } else {
-            ElMessage.error('糟糕，添加失败了！')
+            ElMessage.error('数据不符合要求！！')
         }
     });
     swiperEditDlgCancel();

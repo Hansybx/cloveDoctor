@@ -1,20 +1,10 @@
 <template>
     <el-dialog v-model="state.dlgVisible" title="添加推荐商品">
         <div style="display: flex;">
-            <el-input
-                v-model="state.keyword"
-                class="w-50 m-2"
-                placeholder="搜索药品"
-                :prefix-icon="Search"
-            />
+            <el-input v-model="state.keyword" class="w-50 m-2" placeholder="搜索药品" :prefix-icon="Search" />
             <el-button type="primary" :icon="Search" @click="drugSearch()" />
         </div>
-        <el-table
-            :data="state.drugList"
-            height="auto"
-            style="width: 100%;"
-            @selection-change="handleSelectionChange"
-        >
+        <el-table :data="state.drugList" height="auto" style="width: 100%;" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="60" />
             <el-table-column prop="id" label="药品Id" width="180" />
             <el-table-column prop="drugName" label="药品名" width="680" />
@@ -54,6 +44,7 @@ const handleSelectionChange = (val: any) => {
 }
 const dlgClose = () => {
     state.dlgVisible = false;
+    state.drugList = []
 }
 
 const drugSearch = () => {
@@ -75,6 +66,10 @@ const drugSearch = () => {
 }
 
 const drugsAdd = () => {
+    if(state.addParams.length === 0) {
+        ElMessage.error('请添加数据')
+        return;
+    }
     axios.post(Constant.BASE_URL_ADMIN + '/recommend/add', state.addParams).then(res => {
         if (res.data.code === 200) {
             ElMessage({

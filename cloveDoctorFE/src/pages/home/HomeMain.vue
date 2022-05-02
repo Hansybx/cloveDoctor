@@ -1,13 +1,9 @@
 <template>
     <el-row class="swiper-container">
         <!-- <HomeCategories /> -->
-        <el-carousel
-            v-if="local.swiperList.length > 0"
-            class="carousel-container"
-            :interval="swiperInterval"
-        >
+        <el-carousel v-if="local.swiperList.length > 0" class="carousel-container" :interval="swiperInterval">
             <el-carousel-item v-for="item in local.swiperList" :key="item">
-                <el-image :src="item.imgUrl" @click="toDrugItem()" />
+                <el-image :src="item.imgUrl" @click="toDrugItem(item.drugId)" />
             </el-carousel-item>
         </el-carousel>
     </el-row>
@@ -40,11 +36,15 @@ const getSwiper = () => {
     axios.get(Constant.BASE_URL + '/swiper').then(res => {
         if (res.data.code === 200) {
             local.swiperList = res.data.data;
+            if (local.swiperList.length == 0) {
+                local.swiperList = [{ 'imgUrl': 'https://iconfont.alicdn.com/t/1ceabb3b-9897-4d11-b22f-d91f9fc576bf.png' }]
+            }
         }
     })
 }
 
 const toDrugItem = (id: number) => {
+    if (id === undefined || id === null) return;
     router.push("/drug/" + id)
 }
 

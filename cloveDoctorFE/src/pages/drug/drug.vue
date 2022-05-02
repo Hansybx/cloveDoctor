@@ -16,9 +16,9 @@
                 <el-form-item label="库存数量">
                     <div>{{ drugInfo.stock }}</div>
                 </el-form-item>
-                <el-form-item label="生产厂家">
+                <!-- <el-form-item label="生产厂家">
                     <div>asd</div>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item label="购买数量">
                     <el-input-number v-model="drugInfo.num" :min="1" :max="drugInfo.stock" />
                 </el-form-item>

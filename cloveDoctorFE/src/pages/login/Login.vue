@@ -3,14 +3,8 @@
         <img class="background" src="../../assets/background.jpg" />
         <el-card class="centerCard">
             <div v-if="isLogin">
-                <el-form
-                    :ref="ruleFormRef"
-                    label-position="Right"
-                    label-width="auto"
-                    :rules="loginRules"
-                    :model="loginForm"
-                    style="max-width: 460px"
-                >
+                <el-form ref="ruleFormRef" label-position="Right" label-width="auto" :rules="loginRules"
+                    :model="loginForm" style="max-width: 460px">
                     <el-form-item label="用户名" prop="username">
                         <el-input v-model="loginForm.username" />
                     </el-form-item>
@@ -20,29 +14,18 @@
                     <el-form-item label="验证码" prop="captcha">
                         <div class="captcha-container">
                             <el-input v-model="loginForm.captcha" />
-                            <el-image
-                                :src="imgUrl"
-                                @click="capthcaRefresh()"
-                                class="captcha-img"
-                                fit="contain"
-                            />
+                            <el-image :src="imgUrl" @click="capthcaRefresh()" class="captcha-img" fit="contain" />
                         </div>
                     </el-form-item>
                 </el-form>
                 <el-row class="btnGroup">
                     <el-button type="primary" @click="toRegister()">注册</el-button>
-                    <el-button type="success" @click="login()">登录</el-button>
+                    <el-button type="success" @click="login(ruleFormRef)">登录</el-button>
                 </el-row>
             </div>
             <div v-else>
-                <el-form
-                    :ref="ruleFormRef"
-                    label-position="Right"
-                    label-width="auto"
-                    :rules="loginRules"
-                    :model="loginForm"
-                    style="max-width: 460px"
-                >
+                <el-form ref="ruleFormRef" label-position="Right" label-width="auto" :rules="loginRules"
+                    :model="loginForm" style="max-width: 460px">
                     <el-form-item label="用户名" prop="username">
                         <el-input v-model="loginForm.username" />
                     </el-form-item>
@@ -55,17 +38,12 @@
                     <el-form-item label="验证码" prop="captcha">
                         <div class="captcha-container">
                             <el-input v-model="loginForm.captcha" />
-                            <el-image
-                                :src="imgUrl"
-                                @click="capthcaRefresh()"
-                                class="captcha-img"
-                                fit="contain"
-                            />
+                            <el-image :src="imgUrl" @click="capthcaRefresh()" class="captcha-img" fit="contain" />
                         </div>
                     </el-form-item>
                 </el-form>
                 <el-row class="btnGroup">
-                    <el-button type="primary" @click="register()">注册</el-button>
+                    <el-button type="primary" @click="register(ruleFormRef)">注册</el-button>
                     <el-button type="success" @click="toLogin()">返回登录</el-button>
                 </el-row>
             </div>
@@ -134,13 +112,40 @@ const loginRules = reactive({
     ],
 })
 
-const register = () => {
-    loginFormPost('/register');
+const register = async (formEl: FormInstance | undefined) => {
+    if (!formEl) {
+        ElMessage.error('请符合填写规则！')
+        return
+    }
+    await formEl.validate((valid: any, fields: any) => {
+        if (valid) {
+            console.log('submit!')
+            loginFormPost('/register');
+            formEl.resetFields()
+        } else {
+            ElMessage.error('请符合填写规则！')
+            console.log('error submit!', fields)
+        }
+    })
 }
 
-const login = () => {
-    loginFormPost('/login');
+const login = async (formEl: FormInstance | undefined) => {
+    if (!formEl) {
+        ElMessage.error('请符合填写规则！')
+        return
+    }
+    await formEl.validate((valid: any, fields: any) => {
+        if (valid) {
+            console.log('submit!')
+            loginFormPost('/login');
+            formEl.resetFields()
+        } else {
+            ElMessage.error('请符合填写规则！')
+            console.log('error submit!', fields)
+        }
+    })
 }
+
 
 const loginFormPost = (uri: string) => {
     console.log(loginForm)
@@ -152,6 +157,7 @@ const loginFormPost = (uri: string) => {
             });
             router.replace({ path: "/home" });
             user.loginSuccess(res.data.data)
+            localStorage.setItem('login',res.data.data)
         } else if (res.data.code === 400) {
             ElMessage.error(res.data.message)
         } else {
